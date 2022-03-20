@@ -248,7 +248,7 @@ margin-left: 30px;
                     <p>CheckOut</p>
                     <p class="money-one"></p>
                 </div>
-                <div class="wallet-type-right">
+                <div id="withdraw-shib" class="wallet-type-right">
                     <img src="./img/moneyTwo.svg">
                     <p>Withdraw Shib</p>
                     <p class="money-two"></p>
@@ -268,7 +268,7 @@ margin-left: 30px;
                 <div class="progress-content">
                     <p class="progress-p">
                         <span style="opacity: 0.5;">balance：</span>
-                        <span>00.00 SKP</span>
+                        <span class="skp-balance">00.00 SKP</span>
                     </p>
                     <div class="progress-chart">
                         <span style="margin-left: 20px;">00 </span>
@@ -289,7 +289,7 @@ margin-left: 30px;
                         <span>90</span>
                         <span>100</span>
                     </p>
-                    <button  id="stake-skp1" class="approval-btn">Stake</button>
+                    <button  id="stake-skp" class="approval-btn">Stake</button>
                 </div>
                 <div class="progress-content-right"></div>
             </div>
@@ -348,7 +348,7 @@ for(var i = 0 ; i < data.length;i++){
 $('.bottmon-box').html(html)
 $.ajax({
     type: "POST",
-    url: '103.153.138.204:8080/prestake/list?page=1',
+    url: 'http://103.153.138.204:8080/prestake/list?page=1',
     data: {
 
     },
@@ -367,7 +367,7 @@ var page = 1
 $('.page-data span').eq(0).click(function(){
     $.ajax({
         type: "POST",
-        url: '103.153.138.204:8080/prestake/list?page=1',
+        url: 'http://103.153.138.204:8080/prestake/list?page=1',
         data: {
             page :1
         },
@@ -391,7 +391,7 @@ $('.page-data span').eq(1).click(function(){
     console.log(page)
     $.ajax({
         type: "POST",
-        url: '103.153.138.204:8080/prestake/list?page=1',
+        url: 'http://103.153.138.204:8080/prestake/list?page=1',
         data: {
             page : page
         },
@@ -706,17 +706,10 @@ $('.page-data span').eq(2).click(function(){
         
             });
         
-            jQuery("#stake-skp1").click(async function () {
+            jQuery("#stake-skp").click(async function () {
                stake(3);
             });
         
-            jQuery("#stake-skp2").click(async function () {
-                stake(7);
-            });
-        
-            jQuery("#stake-skp3").click(async function () {
-                stake(10);
-            });
         
             jQuery("#redeem-skp").click(async function () {
                 redeem();
@@ -780,12 +773,9 @@ $('.page-data span').eq(2).click(function(){
         
                 let bal = await prestake.balanceOf(myAddress);
                 let bigBal = new BigNumber(bal.toString());
-        
-                showResult(jQuery("#bal"), bigBal.div(1e9).toFixed(2).toString());
                 
-                showResult(jQuery("#withDrawable"), 
-                    bigShib.div(1e18).toFixed(2).toString()
-                    );
+                $('.skp-balance').html(bigShib.div(1e18).toFixed(2).toString());
+                $('.money-four').html(jQuery("#bal"), bigBal.div(1e9).toFixed(2).toString());
                 await getAddressRank(myAddress);
                 
                 getAddressRank(bal.toString());
