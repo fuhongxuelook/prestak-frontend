@@ -271,8 +271,8 @@ margin-left: 30px;
                         <span id="skp-balance">00.00 SKP</span>
                     </p>
                     <div class="progress-chart">
-                        <span style="margin-left: 20px;">00 </span>
-                        <span style="margin-right: 20px;float: right;">(00.00 ） </span>
+                        <span id="stake_num" style="margin-left: 20px;">00 </span>
+                        <span id="skp_total" style="margin-right: 20px;float: right;">(00.00 ） </span>
                     </div>
                     <div class="progress-border bar">
                         <span class="progress-end radio"></span></div>
@@ -411,8 +411,8 @@ $('.page-data span').eq(2).click(function(){
     page = page+1;
     console.log(page)
     $.ajax({
-        type: "POST",
-        url: '103.153.138.204:8080/prestake/list?page=1',
+        type: "GET",
+        url: 'http://103.153.138.204:8080/prestake/list?page=1',
         data: {
             page : page
         },
@@ -432,8 +432,10 @@ $('.page-data span').eq(2).click(function(){
     
 
 
-    $(".radio").mousedown(function(e) {
+    $(".radio").mousedown(async function(e) {
         var obj = $(this)
+        let skpAmount = await skpObj.balanceOf(myAddress);
+        let bigSkpAmount = new BigNumber(skpAmount.toString());
         $(window).unbind("mousemove");
         window.RadioLeft =obj.offset().left;
         window.BoxLeft = obj.parent(".bar").offset().left;
@@ -459,7 +461,9 @@ $('.page-data span').eq(2).click(function(){
                 if (val > 100) {
                     val = 100;
                 }
-                console.log(val )
+
+                let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
+                jQuery("#stake_num").html(amount.toString());
                 $(".title").text(val );
                 $(".loading").width(val );
             }
@@ -767,16 +771,20 @@ $('.page-data span').eq(2).click(function(){
             
         
             async function info() {
-                let shib = await prestake.withdrawableSHIBOf(myAddress);
-        
+                let shib = await prestake.withdrawableSHIBOf(myAddress);        
                 let bigShib = new BigNumber(shib.toString());
         
                 let bal = await prestake.balanceOf(myAddress);
                 let bigBal = new BigNumber(bal.toString());
 
-                jQuery("#skp-balance").html(bigBal.div(1e18).toFixed(2).toString());
+                let skp = await skpObj.balanceOf(myAddress);
+                let bigSkp = new BigNumber(skp.toString());
+
+                jQuery("#skp-balance").html(bigBal.div(1e18).toFixed(0).toString());
+
+                jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString());
                 
-                $('.money-four').html(bigShib.div(1e9).toFixed(2).toString());
+                $('.money-four').html(bigShib.div(1e9).toFixed(0).toString());
                 await getAddressRank(myAddress);
                 
                 getAddressRank(bal.toString());
