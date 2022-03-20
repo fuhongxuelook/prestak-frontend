@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.0.2/bignumber.min.js'></script>
+</head>
+<style>
+body,h1,h2,h3,h4,h5,h6,hr,p,ul,ol,dl,dd,fieldset,input,option,textarea,td{
+	margin:0;
+	padding:0;
+}
+body{
+	font-family: "微软雅黑";
+}
+a{
+	text-decoration: none;
+}
+ul,li{
+	list-style: none;
+}
+img{
+	border: none;
+}
+.box{
+    background-image: radial-gradient(50% 124%, #283083 26%, #040D5A 100%);
+}
+.herder-box{
+  
+    background: #757CB3;
+}
+.herder-log{
+    width: 220px;
+    height: 40px;
+    margin-left: 150px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.box-content{
+    width: 1035px;
+    margin: auto;
+    height: 1000px;
+}
+.wallet-total{
+    display: inline-block;
+    float: right;
+    margin-right: 220px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.wallet-total span{
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 34px;
+    font-weight: 500;
+    /* margin-top: 20px; */
+    float: right;
+    margin-left: 10px;
+}
+.wallet-total img{
+    width: 36px;
+    height: 36px;
+}
+.wallet-type{
+    height: 245px;
+    width: 100%;
+    border-bottom: 1px solid #939ADE;
+}
+.wallet-type-info{
+    height: 150px;
+    margin-top: 45px;
+    float: left;
+    width: 306px;
+}
+.p-info{
+    font-size: 18px;
+    color: #FFFFFF;
+    text-align: justify;
+    line-height: 32px;
+    font-weight: 700;
+}
+.span-content{
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: justify;
+    line-height: 32px;
+    font-weight: 500;
+}
+.wallet-type-info button{
+    width: 120px;
+    height: 36px;
+    background: #F6F7FF;
+border-radius: 2px;
+display: block;
+border: none;
+    margin-top: 25px;
+}
+.refresh-btn img{
+    margin-top: 1px;
+    float: left;
+    margin-left: 26%;
+    margin-right: 5px;
+}
+.refresh-btn span{
+    float: left;
+    /* margin-top: 2px; */
+}
+.wallet-type-right{
+    float: left;
+    width: 180px;
+    text-align: center;
+    margin-top: 45px;
+}
+.wallet-type-right P{
+    font-size: 14px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 24px;
+    font-weight: 500;
+}
+.progress-p{
+    font-size: 18px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    line-height: 36px;
+    font-weight: 400;
+}
+.money-progress{
+    margin-top: 30px;
+    background-image: url(./img/earth.png);
+    background-position: 202px -168px;
+    height: 310px;
+    /* display: inline-block; */
+}
+.progress-content-right{
+    
+}
+.progress-chart{
+    background: rgba(105,116,209,0.30);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    width: 460px;
+    height: 120px;
+    margin-top: 20px;
+    line-height: 120px;
+    color: #fff;
+}
+.progress-border{
+    background: rgba(201,206,255,0.90);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 460px;
+}
+.progress-end{
+    width: 14px;
+    height: 14px;
+    float: right;
+    background: background: #B7BDF1;
+    background: #B7BDF1;
+    border-radius: 46%;
+    margin-top: -7px;
+    margin-right: 10px;
+}
+.progress-content{
+    width: 48%;
+    float: left;
+    margin-left: 2%;
+    position: relative;
+}
+.progress-num span{
+    font-size: 12px;
+color: #FFFFFF;
+letter-spacing: 0;
+text-align: left;
+font-weight: 400;
+margin-left: 30px;
+}
+.approval-btn{
+    background: #fff;
+    border: none;
+    width: 188px;
+    height: 38px;
+    font-size: 16px;
+    color: #333333;
+    letter-spacing: 0;
+    font-weight: 500;
+    margin-left: 113px;
+    margin-top: 20px;
+    border-radius: 2px;
+}
+.radio{
+    position: absolute;
+}
+.bar {
+    /* width: 195px;
+    height: 1px; */
+    /* background-color: black; */
+    cursor: pointer;
+    position: absolute;
+    /* top: 50%; */
+    /* left: 12%; */
+    transform: translate(0,-50%);
+    /* left: 200px; */
+}
+.progress-num{
+    margin-top: 22px;
+}
+.bottom-data{
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    line-height: 54px;
+}
+.page-data{
+    color: #fff;
+    margin-top: 30px;
+    text-align: center;
+    cursor:pointer;
+}
+.page-data span{
+    margin-left: 10px;
+}
+</style>
+<body>
+    <div class="box">
+        <div class="herder-box">
+            <img class="herder-log" src="./img/LOGO.svg">
+            <div id="connect-wallet" class="wallet-total">
+                <img src="./img/wallet.svg">
+                <span></span>
+            </div>
+        </div>
+        <div class="box-content">
+            <div class="wallet-type">
+                <div class="wallet-type-info">
+                    <p class="p-info">INFO:</p>
+                    <span class="span-content">Every Staker of top 1000 will auto migrate to AKP Mine</span>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>fresh</span></button>
+                </div>
+                <div id="refresh" class="wallet-type-right">
+                    <img src="./img/moneyOne.svg">
+                    <p>REFRESH</p>
+                    <p class="money-one">00</p>
+                </div>
+                <div class="wallet-type-right">
+                    <img src="./img/moneyTwo.svg">
+                    <p>Withdraw Shib</p>
+                    <p class="money-two">00</p>
+                </div>
+                <div class="wallet-type-right">
+                    <img src="./img/moneyThree.svg">
+                    <p>Rank</p>
+                    <p class="money-three">00</p>
+                </div>
+                <div class="wallet-type-right">
+                    <img src="./img/moneyFour.svg">
+                    <p>Withdrawable Balance</p>
+                    <p class="money-four">00</p>
+                </div>
+            </div>
+            <div class="money-progress">
+                <div class="progress-content">
+                    <p class="progress-p">
+                        <span style="opacity: 0.5;">balance：</span>
+                        <span>00.00 SKP</span>
+                    </p>
+                    <div class="progress-chart">
+                        <span style="margin-left: 20px;">00 </span>
+                        <span style="margin-right: 20px;float: right;">(00.00 ） </span>
+                    </div>
+                    <div class="progress-border bar">
+                        <span class="progress-end radio"></span></div>
+                    
+                    <p class="progress-num">
+                        <span style="margin-left: 2px;">10</span>
+                        <span>20</span>
+                        <span>30</span>
+                        <span>40</span>
+                        <span>50</span>
+                        <span>60</span>
+                        <span>70</span>
+                        <span>80</span>
+                        <span>90</span>
+                        <span>100</span>
+                    </p>
+                    <button  id="stake-skp1" class="approval-btn">Stake</button>
+                </div>
+                <div class="progress-content-right"></div>
+            </div>
+            <div class="bottmon-box">
+                <div class="bottom-data">
+                    <span style="margin-left: 10px;">1.</span>
+                    <span style="margin-left: 13%;">hhhhhhhhhhhhhhhhhhh</span>
+                    <span style="float: right;margin-right: 20px;">ssssssss</span>
+                </div>
+            </div>
+            <div class="page-data">
+                <span>first</span>
+                <span>last</span>
+                <span>next</span>
+                <span>total <b> 0</b></span>
+            </div>
+        </div>
+        
+    </div>
+    
+</body>
+<script>
+var html = '';
+var data = [
+    {
+        "id": 1,
+        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD4\"",
+        "amount": "\"10120011\"",
+        "status": 1,
+        "created_at": "2022-03-20 15:16:26"
+    },
+    {
+        "id": 2,
+        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD2\"",
+        "amount": "\"10120011\"",
+        "status": 1,
+        "created_at": "2022-03-20 15:16:32"
+    },
+    {
+        "id": 3,
+        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD1\"",
+        "amount": "\"10120011\"",
+        "status": 1,
+        "created_at": "2022-03-20 15:16:38"
+    }
+]
+for(var i = 0 ; i < data.length;i++){
+    var code = i+1
+    html+='<div class="bottom-data">'+
+            '<span style="margin-left: 10px;">'+code+'</span>'+
+            '<span style="margin-left: 13%;">'+data[i].address+'</span>'+
+            '<span style="margin-left: 10%;">'+data[i].amount+'</span>'+
+            '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
+            '</div>'
+}
+$('.bottmon-box').html(html)
+$.ajax({
+    type: "POST",
+    url: '103.153.138.204:8080/prestake/list?page=1',
+    data: {
+
+    },
+    dataType: "json",
+    xhrFields: {
+        withCredentials: true
+    },
+    success: function (data) {
+        $('.page-data b').html('99')
+    },
+    error: function () {
+        
+    }
+});
+var page = 1
+$('.page-data span').eq(0).click(function(){
+    $.ajax({
+        type: "POST",
+        url: '103.153.138.204:8080/prestake/list?page=1',
+        data: {
+            page :1
+        },
+        dataType: "json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            
+        },
+        error: function () {
+            
+        }
+    });
+})
+$('.page-data span').eq(1).click(function(){
+    page= page -1;
+    if(page == 0){
+        page = 1
+    }
+    console.log(page)
+    $.ajax({
+        type: "POST",
+        url: '103.153.138.204:8080/prestake/list?page=1',
+        data: {
+            page : page
+        },
+        dataType: "json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            
+        },
+        error: function () {
+            
+        }
+    });
+})
+$('.page-data span').eq(2).click(function(){
+    page = page+1;
+    console.log(page)
+    $.ajax({
+        type: "POST",
+        url: '103.153.138.204:8080/prestake/list?page=1',
+        data: {
+            page : page
+        },
+        dataType: "json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            
+        },
+        error: function () {
+            
+        }
+    });
+})
+
+    
+
+
+    $(".radio").mousedown(function(e) {
+        var obj = $(this)
+        $(window).unbind("mousemove");
+        window.RadioLeft =obj.offset().left;
+        window.BoxLeft = obj.parent(".bar").offset().left;
+        window.BoxWidth = obj.parent(".bar").width();
+        window.RadioWidth = obj.width();
+        
+        var X = e.pageX;
+        $(window).bind("mousemove");
+        $(window).mousemove(function(e) {
+            if (e.pageX < BoxLeft) {
+                obj.css("left", "0px");
+                $(".title").text("0%");
+
+            } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
+                obj.css("right", "0px");
+                $(".title").text("100%");
+            } else {
+                obj.css("left", e.pageX - RadioLeft + "px");
+                var newRadioLeft = obj.offset().left;
+                var newBoxLeft = obj.parent(".bar").offset().left;
+                var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100+10;
+                val = Math.floor(val);
+                if (val > 100) {
+                    val = 100;
+                }
+                console.log(val )
+                $(".title").text(val );
+                $(".loading").width(val );
+            }
+        });
+    });
+    $(".radio").mouseup(function(e) {
+        $(window).unbind("mousemove");
+    });
+    $(window).mouseup(function(e) {
+        $(this).unbind("mousemove");
+    });
+        let abi = [
+            {
+                "inputs": [],
+                "name": "Redeem",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "SKPTotalStakedAmount",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Stake",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "spender",
+                        "type": "address"
+                    }
+                ],
+                "name": "allowance",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "spender",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "approve",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "account",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "checkout",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "claimRewards",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getNumberOfDistributorHolders",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getSHIBTotalDistributed",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address[]",
+                        "name": "stakers",
+                        "type": "address[]"
+                    }
+                ],
+                "name": "migrate",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "account",
+                        "type": "address"
+                    }
+                ],
+                "name": "withdrawableSHIBOf",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]
+        
+            let signer;
+        
+            let Contract = '0xE8B4C4b938cc5043c7A1BE16B547Cf7E03bC74f3';
+            let SKP = "0x60450e4F1246fedb38F83062BCB2BebAab6d110B";
+                
+            let prestake;
+            let skpObj;
+                
+            let myAddress;
+        
+            function showResult(node, msg) {
+                node.text(msg);
+            }
+        
+            jQuery("#connect-wallet").click(async function () {
+                await window.ethereum.enable()
+                if (typeof window.ethereum == 'undefined') {
+                    alert('MetaMask is not installed!');
+                } else {
+                    if (window.ethereum.chainId != "0x61") { //Test 0x61 BSC MAIN 0x38
+                        showResult(jQuery("#connect-wallet"), "Connect wallet");
+                        showResult(jQuery("#say") ,"Wrong network, please switch to BSC network")
+                        return;
+                    }
+                }
+        
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+        
+                // The MetaMask plugin also allows signing transactions to
+                // send ether and pay to change state within the blockchain.
+                // For this, you need the account signer...
+                signer = provider.getSigner();
+                myAddress = await signer.getAddress();
+                prestake = new ethers.Contract(Contract, abi, signer);
+                skpObj = new ethers.Contract(SKP, abi, signer);
+                showResult(jQuery("#connect-wallet"), myAddress);
+                showResult(jQuery("#say"), "");
+                info();
+        
+            });
+        
+            jQuery("#stake-skp1").click(async function () {
+               stake(3);
+            });
+        
+            jQuery("#stake-skp2").click(async function () {
+                stake(7);
+            });
+        
+            jQuery("#stake-skp3").click(async function () {
+                stake(10);
+            });
+        
+            jQuery("#redeem-skp").click(async function () {
+                redeem();
+            });
+        
+            jQuery("#withdraw-shib").click(async function () {
+                withdraw();
+        
+            });
+        
+            jQuery("#info").click(async function () {
+                info();
+        
+            });
+            
+            jQuery("#refresh").click(async function () {
+                refresh();
+        
+            });
+        
+            async function stake(rate) {
+                let bal = await skpObj.balanceOf(myAddress);
+        
+                let limit = new BigNumber(1000000000);
+                let bigBal = new BigNumber(bal.toString());
+                if(bigBal.comparedTo(limit) < 1) {
+                    alert("skp balance is not enough");
+                    return;
+                }
+        
+                let allowance = await skpObj.allowance(myAddress, Contract);
+                let bigAllowance = new BigNumber(allowance.toString());
+        
+                if(bigAllowance.comparedTo(bigBal) == -1) {
+                    await skpObj.approve(Contract, ethers.constants.MaxUint256);
+                }
+        
+                let num = bigBal.div(10).multipliedBy(rate).toFixed(0);
+        
+                await prestake.Stake(num.toString());
+            }
+        
+            async function redeem() {
+                await prestake.Redeem();
+            }
+        
+            async function withdraw() {
+                await prestake.claimRewards()
+            }
+        
+            async function refresh() {
+                await prestake.checkout();
+            }
+        
+            
+        
+            async function info() {
+                let shib = await prestake.withdrawableSHIBOf(myAddress);
+        
+                let bigShib = new BigNumber(shib.toString());
+        
+                let bal = await prestake.balanceOf(myAddress);
+                let bigBal = new BigNumber(bal.toString());
+        
+                showResult(jQuery("#bal"), bigBal.div(1e9).toFixed(2).toString());
+                
+                showResult(jQuery("#withDrawable"), 
+                    bigShib.div(1e18).toFixed(2).toString()
+                    );
+                await getAddressRank(myAddress);
+                
+                getAddressRank(bal.toString());
+        
+            }
+
+            function getAddressRank(bal) {
+
+                $.ajax({
+                    type: "GET",
+                    url: 'http://103.153.138.204:8080/prestake/rank',
+                    data: {
+                        amount: bal.toString()
+                    },
+                    dataType: "json",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data) {
+                       $('.money-three').html(data);
+                    },
+                    error: function () {
+                       
+                    }
+                });
+            }
+        
+            function timestampConvert(tm) {
+                if(tm == 0) {
+                    return "NaN";
+                }
+                var sd = new Date(tm * 1000).toLocaleDateString("en-US")
+                var st = new Date(tm * 1000).toLocaleTimeString("en-US")
+                return sd + " - " + st;
+            }
+        
+        
+        
+        
+        </script>
+</html>
