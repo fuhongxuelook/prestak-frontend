@@ -268,7 +268,7 @@ margin-left: 30px;
                 <div class="progress-content">
                     <p class="progress-p">
                         <span style="opacity: 0.5;">balance：</span>
-                        <span class="skp-balance">00.00 SKP</span>
+                        <span id="skp-balance">00.00 SKP</span>
                     </p>
                     <div class="progress-chart">
                         <span style="margin-left: 20px;">00 </span>
@@ -347,7 +347,7 @@ for(var i = 0 ; i < data.length;i++){
 }
 $('.bottmon-box').html(html)
 $.ajax({
-    type: "POST",
+    type: "GET",
     url: 'http://103.153.138.204:8080/prestake/list?page=1',
     data: {
 
@@ -366,7 +366,7 @@ $.ajax({
 var page = 1
 $('.page-data span').eq(0).click(function(){
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: 'http://103.153.138.204:8080/prestake/list?page=1',
         data: {
             page :1
@@ -773,9 +773,10 @@ $('.page-data span').eq(2).click(function(){
         
                 let bal = await prestake.balanceOf(myAddress);
                 let bigBal = new BigNumber(bal.toString());
+
+                jQuery("#skp-balance").html(bigBal.div(1e18).toFixed(2).toString());
                 
-                $('.skp-balance').html(bigShib.div(1e18).toFixed(2).toString());
-                $('.money-four').html(jQuery("#bal"), bigBal.div(1e9).toFixed(2).toString());
+                $('.money-four').html(bigShib.div(1e9).toFixed(2).toString());
                 await getAddressRank(myAddress);
                 
                 getAddressRank(bal.toString());
