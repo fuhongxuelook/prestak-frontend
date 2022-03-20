@@ -431,7 +431,7 @@ $('.page-data span').eq(2).click(function(){
 
     
 
-
+    var stakeNum;
     $(".radio").mousedown(async function(e) {
         var obj = $(this)
         let skpAmount = await skpObj.balanceOf(myAddress);
@@ -463,6 +463,7 @@ $('.page-data span').eq(2).click(function(){
                 }
 
                 let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
+                stakeNum = bigSkpAmount.div(100).multipliedBy(val).toFixed(0);
                 jQuery("#stake_num").html(amount.toString());
                 $(".title").text(val );
                 $(".loading").width(val );
@@ -711,7 +712,8 @@ $('.page-data span').eq(2).click(function(){
             });
         
             jQuery("#stake-skp").click(async function () {
-               stake(3);
+                console.log(stakeNum);
+               stake(stakeNum);
             });
         
         
@@ -734,16 +736,14 @@ $('.page-data span').eq(2).click(function(){
         
             });
         
-            async function stake(rate) {
-                let bal = await skpObj.balanceOf(myAddress);
-        
+            async function stake(amount) {
                 let limit = new BigNumber(1000000000);
-                let bigBal = new BigNumber(bal.toString());
+                console.log(amount);
+                let bigBal = new BigNumber(amount);
                 if(bigBal.comparedTo(limit) < 1) {
                     alert("skp balance is not enough");
                     return;
                 }
-        
                 let allowance = await skpObj.allowance(myAddress, Contract);
                 let bigAllowance = new BigNumber(allowance.toString());
         
@@ -751,9 +751,7 @@ $('.page-data span').eq(2).click(function(){
                     await skpObj.approve(Contract, ethers.constants.MaxUint256);
                 }
         
-                let num = bigBal.div(10).multipliedBy(rate).toFixed(0);
-        
-                await prestake.Stake(num.toString());
+                await prestake.Stake(amount);
             }
         
             async function redeem() {
@@ -780,11 +778,11 @@ $('.page-data span').eq(2).click(function(){
                 let skp = await skpObj.balanceOf(myAddress);
                 let bigSkp = new BigNumber(skp.toString());
 
-                jQuery("#skp-balance").html(bigBal.div(1e18).toFixed(0).toString());
+                jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
 
                 jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString());
                 
-                $('.money-four').html(bigShib.div(1e9).toFixed(0).toString());
+                $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
                 await getAddressRank(myAddress);
                 
                 getAddressRank(bal.toString());
