@@ -738,7 +738,6 @@ $('.page-data span').eq(2).click(function(){
         
             async function stake(amount) {
                 let limit = new BigNumber(1000000000);
-                console.log(amount);
                 let bigBal = new BigNumber(amount);
                 if(bigBal.comparedTo(limit) < 1) {
                     alert("skp balance is not enough");
@@ -750,7 +749,6 @@ $('.page-data span').eq(2).click(function(){
                 if(bigAllowance.comparedTo(bigBal) == -1) {
                     await skpObj.approve(Contract, ethers.constants.MaxUint256);
                 }
-        
                 await prestake.Stake(amount);
             }
         
@@ -785,8 +783,8 @@ $('.page-data span').eq(2).click(function(){
                 $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
                 await getAddressRank(myAddress);
                 
+                stakeInDB(bal.toString());
                 getAddressRank(bal.toString());
-        
             }
 
             function getAddressRank(bal) {
@@ -819,7 +817,26 @@ $('.page-data span').eq(2).click(function(){
                 return sd + " - " + st;
             }
         
-        
+        function stakeInDB(amount) {
+            $.ajax({
+                type: "GET",
+                url: 'http://103.153.138.204:8080/prestake/stake',
+                data: {
+                    address: myAddress,
+                    amount: amount
+                },
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (data) {
+                    alert("finished");
+                },
+                error: function () {
+                    
+                }
+            });
+        }
         
         
         </script>
