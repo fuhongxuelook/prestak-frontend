@@ -271,12 +271,12 @@ margin-left: 30px;
             <div class="money-progress">
                 <div class="progress-content">
                     <p class="progress-p">
-                        <span style="opacity: 0.5;">balance：</span>
+                        <span style="opacity: 0.5;">staked：</span>
                         <span id="skp-balance">00.00 SKP</span>
                     </p>
                     <div class="progress-chart">
                         <span id="stake_num" style="margin-left: 20px;">00 </span>
-                        <span id="skp_total" style="margin-right: 20px;float: right;">(00.00 ） </span>
+                        <span id="skp_total" style="margin-right: 20px;float: right;">(00.00) max </span>
                     </div>
                     <div class="progress-border bar">
                         <span class="progress-end radio"></span></div>
@@ -780,7 +780,7 @@ window.RadioWidth = $(".radio").width();
 
                 jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
 
-                jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString());
+                jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString() + " max");
                 
                 $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
                 await getAddressRank(myAddress);
