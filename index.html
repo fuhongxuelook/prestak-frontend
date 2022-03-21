@@ -332,31 +332,30 @@ for(var i = 0 ; i < data.length;i++){
 $('.bottmon-box').html(html)
 
 function listDataDeal(data) {
-    empty = '<div class="bottom-data"></div>'
+    html = ""
     for(var i = 0 ; i < data.length; i++){
     var code = i+1
     html+='<div class="bottom-data">'+
         '<span style="margin-left: 10px;">'+code+'</span>'+
         '<span style="margin-left: 13%;">'+data[i].address+'</span>'+
-        '<span style="margin-left: 10%;">'+data[i].amount+'</span>'+
+        '<span style="margin-left: 10%;">'+(data[i].amount / (1e9)).toFixed() +'</span>'+
         '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
         '</div>'
     }
-    $('.bottmon-box').html(empty)
     $('.bottmon-box').html(html)
 }
 $.ajax({
     type: "GET",
     url: 'http://103.153.138.204:8080/prestake/list?page=1',
     data: {
-
     },
     dataType: "json",
     xhrFields: {
         withCredentials: true
     },
     success: function (data) {
-        $('.page-data b').html('99')
+        listDataDeal(data.list)
+        $('.page-data b').html(data.total)
     },
     error: function () {
         
@@ -376,6 +375,7 @@ $('.page-data span').eq(0).click(function(){
         },
         success: function (data) {
             listDataDeal(data.list)
+            $('.page-data b').html(data.total)
         },
         error: function () {
             
@@ -390,7 +390,7 @@ $('.page-data span').eq(1).click(function(){
     console.log(page)
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list?page=1',
+        url: 'http://103.153.138.204:8080/prestake/list',
         data: {
             page : page
         },
@@ -400,6 +400,7 @@ $('.page-data span').eq(1).click(function(){
         },
         success: function (data) {
             listDataDeal(data.list)
+            $('.page-data b').html(data.total)
         },
         error: function () {
             
@@ -411,7 +412,7 @@ $('.page-data span').eq(2).click(function(){
     console.log(page)
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list?page=1',
+        url: 'http://103.153.138.204:8080/prestake/list',
         data: {
             page : page
         },
@@ -420,7 +421,8 @@ $('.page-data span').eq(2).click(function(){
             withCredentials: true
         },
         success: function (data) {
-            
+            listDataDeal(data.list)
+            $('.page-data b').html(data.total)
         },
         error: function () {
             
@@ -830,7 +832,6 @@ window.RadioWidth = $(".radio").width();
                     withCredentials: true
                 },
                 success: function (data) {
-                    alert("finished");
                 },
                 error: function () {
                     
