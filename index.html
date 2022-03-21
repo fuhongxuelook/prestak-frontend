@@ -332,7 +332,8 @@ for(var i = 0 ; i < data.length;i++){
 $('.bottmon-box').html(html)
 
 function listDataDeal(data) {
-    for(var i = 0 ; i < data.length;i++){
+    empty = '<div class="bottom-data"></div>'
+    for(var i = 0 ; i < data.length; i++){
     var code = i+1
     html+='<div class="bottom-data">'+
         '<span style="margin-left: 10px;">'+code+'</span>'+
@@ -341,6 +342,7 @@ function listDataDeal(data) {
         '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
         '</div>'
     }
+    $('.bottmon-box').html(empty)
     $('.bottmon-box').html(html)
 }
 $.ajax({
@@ -439,11 +441,6 @@ window.RadioWidth = $(".radio").width();
         var obj = $(this)
         let skpAmount = await skpObj.balanceOf(myAddress);
         let bigSkpAmount = new BigNumber(skpAmount.toString());
-        $(window).unbind("mousemove");
-        window.RadioLeft =obj.offset().left;
-        window.BoxLeft = obj.parent(".bar").offset().left;
-        window.BoxWidth = obj.parent(".bar").width();
-        window.RadioWidth = obj.width();
         
         var X = e.pageX;
         $(window).bind("mousemove");
