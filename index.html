@@ -351,7 +351,7 @@ function listDataDeal(data) {
 }
 $.ajax({
     type: "GET",
-    url: 'http://103.153.138.204:8080/prestake/list?page=1',
+    url: 'https://shibkingpro.com/prestake/list?page=1',
     data: {
     },
     dataType: "json",
@@ -371,7 +371,7 @@ $.ajax({
 function listFressh(page) {
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list',
+        url: 'https://shibkingpro.com/prestake/list',
         data: {
             page: page
         },
@@ -394,7 +394,7 @@ var page = 1
 $('.page-data span').eq(0).click(function(){
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list?page=1',
+        url: 'https://shibkingpro.com/prestake/list?page=1',
         data: {
             page :1
         },
@@ -420,7 +420,7 @@ $('.page-data span').eq(1).click(function(){
     console.log(page)
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list',
+        url: 'https://shibkingpro.com/prestake/list',
         data: {
             page : page
         },
@@ -443,7 +443,7 @@ $('.page-data span').eq(2).click(function(){
     console.log(page)
     $.ajax({
         type: "GET",
-        url: 'http://103.153.138.204:8080/prestake/list',
+        url: 'https://shibkingpro.com/prestake/list',
         data: {
             page : page
         },
@@ -834,7 +834,7 @@ $('.page-data span').eq(2).click(function(){
 
                 $.ajax({
                     type: "GET",
-                    url: 'http://103.153.138.204:8080/prestake/rank',
+                    url: 'https://shibkingpro.com/prestake/rank',
                     data: {
                         amount: bal.toString()
                     },
@@ -863,7 +863,7 @@ $('.page-data span').eq(2).click(function(){
         function stakeInDB(amount) {
             $.ajax({
                 type: "GET",
-                url: 'http://103.153.138.204:8080/prestake/stake',
+                url: 'https://shibkingpro.com/prestake/stake',
                 data: {
                     address: myAddress,
                     amount: amount
