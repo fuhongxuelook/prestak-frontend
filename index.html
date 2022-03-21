@@ -172,7 +172,7 @@ border: none;
     width: 48%;
     float: left;
     margin-left: 2%;
-    position: relative;
+    /* position: relative; */
 }
 .progress-num span{
     font-size: 12px;
@@ -181,6 +181,7 @@ letter-spacing: 0;
 text-align: left;
 font-weight: 400;
 margin-left: 30px;
+
 }
 .approval-btn{
     background: #fff;
@@ -207,10 +208,13 @@ margin-left: 30px;
     /* top: 50%; */
     /* left: 12%; */
     transform: translate(0,-50%);
+    user-select: none;
+
     /* left: 200px; */
 }
 .progress-num{
     margin-top: 22px;
+    user-select: none;
 }
 .bottom-data{
     border-bottom: 1px solid rgba(255,255,255,0.4);
@@ -279,21 +283,21 @@ margin-left: 30px;
                     
                     <p class="progress-num">
                         <span style="margin-left: 2px;">10</span>
-                        <span>20</span>
-                        <span>30</span>
-                        <span>40</span>
-                        <span>50</span>
-                        <span>60</span>
-                        <span>70</span>
-                        <span>80</span>
-                        <span>90</span>
-                        <span>100</span>
+                        <span>20%</span>
+                        <span>30%</span>
+                        <span>40%</span>
+                        <span>50%</span>
+                        <span>60%</span>
+                        <span>70%</span>
+                        <span>80%</span>
+                        <span>90%</span>
+                        <span>100%</span>
                     </p>
                     <button  id="stake-skp" class="approval-btn">Stake</button>
                 </div>
                 <div class="progress-content-right"></div>
             </div>
-            <div class="bottmon-box">
+            <div class="bottmon-box" style="height:300px;overflow-y:auto">
                 <div class="bottom-data">
                     <span style="margin-left: 10px;">1.</span>
                     <span style="margin-left: 13%;">hhhhhhhhhhhhhhhhhhh</span>
@@ -314,27 +318,7 @@ margin-left: 30px;
 <script>
 var html = '';
 var data = [
-    {
-        "id": 1,
-        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD4\"",
-        "amount": "\"10120011\"",
-        "status": 1,
-        "created_at": "2022-03-20 15:16:26"
-    },
-    {
-        "id": 2,
-        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD2\"",
-        "amount": "\"10120011\"",
-        "status": 1,
-        "created_at": "2022-03-20 15:16:32"
-    },
-    {
-        "id": 3,
-        "address": "\"0x0e37017316b0577Ea07D461d8Ab2887107e78CD1\"",
-        "amount": "\"10120011\"",
-        "status": 1,
-        "created_at": "2022-03-20 15:16:38"
-    }
+    
 ]
 for(var i = 0 ; i < data.length;i++){
     var code = i+1
@@ -346,6 +330,19 @@ for(var i = 0 ; i < data.length;i++){
             '</div>'
 }
 $('.bottmon-box').html(html)
+
+function listDataDeal(data) {
+    for(var i = 0 ; i < data.length;i++){
+    var code = i+1
+    html+='<div class="bottom-data">'+
+        '<span style="margin-left: 10px;">'+code+'</span>'+
+        '<span style="margin-left: 13%;">'+data[i].address+'</span>'+
+        '<span style="margin-left: 10%;">'+data[i].amount+'</span>'+
+        '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
+        '</div>'
+    }
+    $('.bottmon-box').html(html)
+}
 $.ajax({
     type: "GET",
     url: 'http://103.153.138.204:8080/prestake/list?page=1',
@@ -376,7 +373,7 @@ $('.page-data span').eq(0).click(function(){
             withCredentials: true
         },
         success: function (data) {
-            
+            listDataDeal(data.list)
         },
         error: function () {
             
@@ -390,7 +387,7 @@ $('.page-data span').eq(1).click(function(){
     }
     console.log(page)
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: 'http://103.153.138.204:8080/prestake/list?page=1',
         data: {
             page : page
@@ -400,7 +397,7 @@ $('.page-data span').eq(1).click(function(){
             withCredentials: true
         },
         success: function (data) {
-            
+            listDataDeal(data.list)
         },
         error: function () {
             
@@ -430,6 +427,12 @@ $('.page-data span').eq(2).click(function(){
 })
 
     
+$(window).unbind("mousemove");
+window.RadioLeft =$(".radio").offset().left;
+window.BoxLeft = $(".bar").offset().left;
+window.BoxWidth = $(".bar").width();
+window.RadioWidth = $(".radio").width();
+
 
     var stakeNum;
     $(".radio").mousedown(async function(e) {
