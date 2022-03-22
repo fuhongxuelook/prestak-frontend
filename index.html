@@ -391,6 +391,7 @@ function listFressh(page) {
 }
 
 var page = 1
+var limit = new BigNumber(1000000000);
 $('.page-data span').eq(0).click(function(){
     $.ajax({
         type: "GET",
@@ -774,7 +775,6 @@ $('.page-data span').eq(2).click(function(){
             });
         
             async function stake(amount) {
-                let limit = new BigNumber(1000000000);
                 let bigBal = new BigNumber(amount.toString());
                 bigBal = bigBal.multipliedBy(1e9);
                 if(bigBal.comparedTo(limit) < 1) {
@@ -825,7 +825,9 @@ $('.page-data span').eq(2).click(function(){
                 $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
                 await getAddressRank(myAddress);
                 
-                stakeInDB(bal.toString());
+                if(bal.comparedTo(limit) >= 1) {
+                    stakeInDB(bal.toString());
+                }
                 getAddressRank(bal.toString());
                 listFressh(current_page);
             }
