@@ -96,9 +96,9 @@ img{
     width: 120px;
     height: 36px;
     background: #F6F7FF;
-border-radius: 2px;
-display: block;
-border: none;
+    border-radius: 2px;
+    display: block;
+    border: none;
     margin-top: 25px;
 }
 .refresh-btn img{
@@ -106,6 +106,13 @@ border: none;
     float: left;
     margin-left: 26%;
     margin-right: 5px;
+}
+.refresh-btn:hover{
+    cursor: pointer;
+
+    /* border: 1px solid #283083; */
+    color: #040D5A;
+    background-color: #ccc;
 }
 .refresh-btn span{
     float: left;
@@ -187,6 +194,7 @@ margin-left: 30px;
 
 }
 .approval-btn{
+    cursor: pointer;
     background: #fff;
     border: none;
     width: 188px;
@@ -233,6 +241,11 @@ margin-left: 30px;
 .page-data span{
     margin-left: 10px;
 }
+.approval-btn:hover{
+    /* border: 1px solid #283083; */
+    color: #040D5A;
+    background-color: #ccc;
+}
 </style>
 <body>
     <div class="box">
@@ -251,14 +264,10 @@ margin-left: 30px;
                     <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>fresh</span></button>
                 </div>
                 <div id="refresh" class="wallet-type-right">
-                    <img src="./img/moneyOne.svg">
-                    <p>CheckOut</p>
-                    <p class="money-one"></p>
+                    <button class="">CheckOut</button>
                 </div>
                 <div id="withdraw-shib" class="wallet-type-right">
-                    <img src="./img/moneyTwo.svg">
-                    <p>Withdraw Shib</p>
-                    <p class="money-two"></p>
+                    <button class="">WithDraw SHIB</button>
                 </div>
                 <div class="wallet-type-right">
                     <img src="./img/moneyThree.svg">
