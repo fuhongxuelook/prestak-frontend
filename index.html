@@ -854,7 +854,7 @@ $('.page-data span').eq(2).click(function(){
                 $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
                 await getAddressRank(myAddress);
                 
-                if(bal.comparedTo(limit) >= 1) {
+                if(bigBal.comparedTo(limit) >= 1) {
                     stakeInDB(bal.toString());
                 }
                 getAddressRank(bal.toString());
