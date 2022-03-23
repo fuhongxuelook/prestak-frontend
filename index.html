@@ -11,20 +11,20 @@
 </head>
 <style>
 body,h1,h2,h3,h4,h5,h6,hr,p,ul,ol,dl,dd,fieldset,input,option,textarea,td{
-	margin:0;
-	padding:0;
+    margin:0;
+    padding:0;
 }
 body{
-	font-family: "微软雅黑";
+    font-family: "微软雅黑";
 }
 a{
-	text-decoration: none;
+    text-decoration: none;
 }
 ul,li{
-	list-style: none;
+    list-style: none;
 }
 img{
-	border: none;
+    border: none;
 }
 .box{
     background-image: radial-gradient(50% 124%, #283083 26%, #040D5A 100%);
@@ -55,13 +55,27 @@ img{
 }
 .wallet-total span{
     font-size: 16px;
-    color: #FFFFFF;
+    color: orange;
     text-align: center;
     line-height: 34px;
     font-weight: 500;
     /* margin-top: 20px; */
     float: right;
     margin-left: 10px;
+    border: 4px solid #fff;
+    border-radius: 49%;
+    background: oldlace;
+    border-radius: 100px;
+}
+.wallet-total select{
+    border-radius: 100px;
+    border: 1px solid var(--ui-1);
+    padding: 13px 16px;
+    margin: 0 4px;
+    /* display: flex; */
+    align-items: center;
+    font-weight: 700;
+    width: 120px;
 }
 .wallet-total img{
     width: 36px;
@@ -92,7 +106,7 @@ img{
     line-height: 32px;
     font-weight: 500;
 }
-.wallet-type-info button{
+.refresh-btn{
     width: 120px;
     height: 36px;
     background: #F6F7FF;
@@ -100,6 +114,7 @@ img{
     display: block;
     border: none;
     margin-top: 25px;
+    margin: 20px auto;
 }
 .refresh-btn img{
     margin-top: 1px;
@@ -190,7 +205,7 @@ color: #FFFFFF;
 letter-spacing: 0;
 text-align: left;
 font-weight: 400;
-margin-left: 30px;
+margin-left: 15px;
 
 }
 .approval-btn{
@@ -252,7 +267,7 @@ margin-left: 30px;
     background: #fff;
     border: none;
     width: 150px;
-    height: 38px;
+    height: 36px;
     font-size: 16px;
     color: #333333;
     letter-spacing: 0;
@@ -272,8 +287,11 @@ margin-left: 30px;
         <div class="herder-box">
             <img class="herder-log" src="./img/LOGO.svg">
             <div id="connect-wallet" class="wallet-total">
-                <img src="./img/wallet.svg">
-                <span></span>
+                <!-- <img src="./img/wallet.svg"> -->
+                <select>
+                    <option>BSC</option>
+                </select>
+                <span>Connect Wallet</span>
             </div>
         </div>
         <div class="box-content">
@@ -281,23 +299,23 @@ margin-left: 30px;
                 <div class="wallet-type-info">
                     <p class="p-info">INFO:</p>
                     <span class="span-content">Every Staker of top 1000 will auto migrate to AKP Mine</span>
-                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>Refresh</span></button>
+                    
                 </div>
                 <div id="refresh" class="wallet-type-right">
                     <button class="check-btn">CheckOut</button>
                 </div>
-                <div id="withdraw-shib" class="wallet-type-right">
-                    <button class="check-btn">WithDraw SHIB</button>
-                </div>
+                
                 <div class="wallet-type-right">
                     <img src="./img/moneyThree.svg">
                     <p>Rank</p>
                     <p class="money-three">00</p>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>Refresh</span></button>
                 </div>
                 <div class="wallet-type-right">
                     <img src="./img/moneyFour.svg">
                     <p>Withdrawable Balance</p>
                     <p class="money-four">00</p>
+                    <button  id="withdraw-shib" class="check-btn">WithDraw SHIB</button>
                 </div>
             </div>
             <div class="money-progress">
@@ -314,7 +332,8 @@ margin-left: 30px;
                         <span class="progress-end radio"></span></div>
                     
                     <p class="progress-num">
-                        <span style="margin-left: 2px;">10</span>
+                        <span style="margin-left: 2px;">0%</span>
+                        <span>10%</span>
                         <span>20%</span>
                         <span>30%</span>
                         <span>40%</span>
@@ -514,16 +533,16 @@ $('.page-data span').eq(2).click(function(){
         $(window).mousemove(function(e) {
             if (e.pageX < BoxLeft) {
                 obj.css("left", "0px");
-                $(".title").text("0%");
+                $("#skp_input").val("0%");
 
             } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
                 obj.css("right", "0px");
-                $(".title").text("100%");
+                $("#skp_input").val("100%");
             } else {
                 obj.css("left", e.pageX - RadioLeft + "px");
                 var newRadioLeft = obj.offset().left;
                 var newBoxLeft = obj.parent(".bar").offset().left;
-                var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100+10;
+                var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100;
                 val = Math.floor(val);
                 if (val > 100) {
                     val = 100;
@@ -531,7 +550,7 @@ $('.page-data span').eq(2).click(function(){
 
                 let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
                 jQuery("#stake_num").html(amount.toString());
-                $(".title").text(val );
+                $("#skp_input").val(val);
                 $(".loading").width(val );
             }
         });
@@ -756,8 +775,7 @@ $('.page-data span').eq(2).click(function(){
                     alert('MetaMask is not installed!');
                 } else {
                     if (window.ethereum.chainId != "0x61") { //Test 0x61 BSC MAIN 0x38
-                        showResult(jQuery("#connect-wallet"), "Connect wallet");
-                        showResult(jQuery("#say") ,"Wrong network, please switch to BSC network")
+                        showResult(jQuery("#connect-wallet"), "Wrong network, please switch to BSC network");
                         return;
                     }
                 }
@@ -772,7 +790,6 @@ $('.page-data span').eq(2).click(function(){
                 prestake = new ethers.Contract(Contract, abi, signer);
                 skpObj = new ethers.Contract(SKP, abi, signer);
                 showResult(jQuery("#connect-wallet"), myAddress);
-                showResult(jQuery("#say"), "");
                 info();
         
             });
