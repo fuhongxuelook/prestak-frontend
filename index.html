@@ -54,18 +54,20 @@ img{
     margin-bottom: 12px;
 }
 .wallet-total span{
+    cursor: pointer;
     font-size: 16px;
-    color: orange;
+    color: #0fb1ea;
     text-align: center;
     line-height: 34px;
     font-weight: 500;
     /* margin-top: 20px; */
     float: right;
     margin-left: 10px;
-    border: 4px solid #fff;
+    border:4px solid #bfe1ed;
     border-radius: 49%;
-    background: oldlace;
+    background: #bfe1ed;
     border-radius: 100px;
+    padding:0px 20px;
 }
 .wallet-total select{
     border-radius: 100px;
@@ -76,6 +78,8 @@ img{
     align-items: center;
     font-weight: 700;
     width: 120px;
+    background: #fff;
+    color:#333;
 }
 .wallet-total img{
     width: 36px;
@@ -85,6 +89,7 @@ img{
     height: 245px;
     width: 100%;
     border-bottom: 1px solid #939ADE;
+    position:relative;
 }
 .wallet-type-info{
     height: 150px;
@@ -107,37 +112,51 @@ img{
     font-weight: 500;
 }
 .refresh-btn{
+    display:flex;
+    color:#333;
+    justify-content: center;
+    align-items: center;
+    font-size:16px;
     width: 120px;
     height: 36px;
-    background: #F6F7FF;
+    background:#fff;
     border-radius: 2px;
-    display: block;
     border: none;
     margin-top: 25px;
     margin: 20px auto;
+     border-radius:8px;
 }
 .refresh-btn img{
-    margin-top: 1px;
-    float: left;
-    margin-left: 26%;
     margin-right: 5px;
 }
-.refresh-btn:hover{
-    cursor: pointer;
+/* .refresh-btn:hover{ */
+    /* cursor: pointer; */
 
     /* border: 1px solid #283083; */
-    color: #040D5A;
-    background-color: #ccc;
-}
+    /* color: #040D5A; */
+    /* background-color: #ccc; */
+/* } */
 .refresh-btn span{
-    float: left;
     /* margin-top: 2px; */
 }
 .wallet-type-right{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     float: left;
     width: 180px;
     text-align: center;
     margin-top: 45px;
+}
+.iconbox{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    width: 40px;
+    height:40px;
+    border-radius:50%;
+    background:#fff;
 }
 .wallet-type-right P{
     font-size: 14px;
@@ -155,7 +174,7 @@ img{
 }
 .money-progress{
     margin-top: 30px;
-    background-image: url(./img/earth.png);
+    background-image: url(./img/background.png);
     background-position: 202px -168px;
     height: 310px;
     /* display: inline-block; */
@@ -164,16 +183,22 @@ img{
     
 }
 .progress-input{
+    width:270px;
     height: 34px;
+    background: rgba(105,116,209,0.30);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    padding:0px 10px;
+    color: #fff;
 }
 .progress-chart{
     background: rgba(105,116,209,0.30);
     border: 1px solid rgba(255,255,255,0.4);
     border-radius: 20px;
     width: 460px;
-    height: 120px;
+    height: 100px;
     margin-top: 20px;
-    line-height: 120px;
+    line-height: 100px;
     color: #fff;
 }
 .progress-border{
@@ -184,19 +209,19 @@ img{
     width: 460px;
 }
 .progress-end{
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     float: right;
-    background: background: #B7BDF1;
-    background: #B7BDF1;
-    border-radius: 46%;
+     background: #fff;
+    border-radius: 50%;
     margin-top: -7px;
     margin-right: 10px;
+    border:2px solid #91d5ff
 }
 .progress-content{
     width: 48%;
     float: left;
-    margin-left: 2%;
+    /* margin-left: 2%; */
     /* position: relative; */
 }
 .progress-num span{
@@ -210,17 +235,17 @@ margin-left: 15px;
 }
 .approval-btn{
     cursor: pointer;
-    background: #fff;
+    background:#0fb1ea;
     border: none;
-    width: 188px;
+    width: 150px;
     height: 38px;
     font-size: 16px;
-    color: #333333;
+    color: #fff;
     letter-spacing: 0;
     font-weight: 500;
-    margin-left: 113px;
+    margin-left: 12px;
     margin-top: 20px;
-    border-radius: 2px;
+    border-radius:20px;
 }
 .radio{
     position: absolute;
@@ -239,13 +264,13 @@ margin-left: 15px;
     /* left: 200px; */
 }
 .progress-num{
-    margin-top: 22px;
+    margin-top: 30px;
     user-select: none;
 }
 .bottom-data{
     border-bottom: 1px solid rgba(255,255,255,0.4);
     color: #fff;
-    line-height: 54px;
+    line-height: 60px;
 }
 .page-data{
     color: #fff;
@@ -256,39 +281,58 @@ margin-left: 15px;
 .page-data span{
     margin-left: 10px;
 }
-.approval-btn:hover{
-    /* border: 1px solid #283083; */
+/* .approval-btn:hover{
+    border: 1px solid #283083;
     color: #040D5A;
     background-color: #ccc;
-}
+} */
 
 .check-btn{
     cursor: pointer;
-    background: #fff;
+    background:#0fb1ea;
+    
     border: none;
     width: 150px;
     height: 36px;
     font-size: 16px;
-    color: #333333;
+    color: #fff;
+    letter-spacing: 0;
+    font-weight: 500;
+    margin-top: 20px;
+    border-radius:8px;
+}
+/* .checkoutbtn{
     letter-spacing: 0;
     font-weight: 500;
     margin-top: 20px;
     border-radius: 2px;
-}
+    width: 150px;
+    height: 36px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    position:absolute;
+    background:#0fb1ea;
+    left:0px;
+    bottom:44px;
+    color:#fff;
+    border-radius:8px;
 
-.check-btn:hover{
-    /* border: 1px solid #283083; */
+} */
+
+/* .check-btn:hover{
+    border: 1px solid #283083;
     color: #040D5A;
     background-color: #ccc;
-}
+} */
 </style>
 <body>
     <div class="box">
         <div class="herder-box">
             <img class="herder-log" src="./img/LOGO.svg">
-            <div id="connect-wallet" class="wallet-total">
+            <div id="connect-wallet" class="wallet-total" >
                 <!-- <img src="./img/wallet.svg"> -->
-                <select>
+                <select style = "display:none;">
                     <option>BSC</option>
                 </select>
                 <span>Connect Wallet</span>
@@ -302,20 +346,21 @@ margin-left: 15px;
                     
                 </div>
                 <div id="refresh" class="wallet-type-right">
-                    <button class="check-btn">CheckOut</button>
+                    <button class="check-btn">CHECKOUT</button>
                 </div>
                 
                 <div class="wallet-type-right">
-                    <img src="./img/moneyThree.svg">
+                    <div class ="iconbox"><img src="./img/moneyThree.svg"></div>
                     <p>Rank</p>
                     <p class="money-three">00</p>
-                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>Refresh</span></button>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>REFRESH</span></button>
                 </div>
                 <div class="wallet-type-right">
-                    <img src="./img/moneyFour.svg">
+                    <div class ="iconbox"><img src="./img/moneyFour.svg"></div>
+                   
                     <p>Withdrawable Balance</p>
                     <p class="money-four">00</p>
-                    <button  id="withdraw-shib" class="check-btn">WithDraw SHIB</button>
+                    <button  id="withdraw-shib" class="check-btn">WITHDRAW SHIB</button>
                 </div>
             </div>
             <div class="money-progress">
@@ -345,14 +390,14 @@ margin-left: 15px;
                         <span>100%</span>
                     </p>
                     <input id="skp_input" class="progress-input">
-                    <button  id="stake-skp" class="approval-btn">Stake</button>
+                    <button  id="stake-skp" class="approval-btn">STAKE</button>
                 </div>
                 <div class="progress-content-right"></div>
             </div>
             <div class="bottmon-box" style="height:300px;overflow-y:auto">
                 <div class="bottom-data">
                     <span style="margin-left: 10px;">1.</span>
-                    <span style="margin-left: 13%;">hhhhhhhhhhhhhhhhhhh</span>
+                    <span style="margin-left: 6%;">hhhhhhhhhhhhhhhhhhh</span>
                     <span style="float: right;margin-right: 20px;">ssssssss</span>
                 </div>
             </div>
@@ -377,7 +422,7 @@ for(var i = 0 ; i < data.length;i++){
     var code = i+1
     html+='<div class="bottom-data">'+
             '<span style="margin-left: 10px;">'+code+'</span>'+
-            '<span style="margin-left: 13%;">'+data[i].address+'</span>'+
+            '<span style="margin-left: 6%;">'+data[i].address+'</span>'+
             '<span style="margin-left: 10%;">'+data[i].amount+'</span>'+
             '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
             '</div>'
@@ -390,7 +435,7 @@ function listDataDeal(data) {
     var code = i+1
     html+='<div class="bottom-data">'+
         '<span style="margin-left: 10px;">'+code+'</span>'+
-        '<span style="margin-left: 13%;">'+data[i].address+'</span>'+
+        '<span style="margin-left: 6%;">'+data[i].address+'</span>'+
         '<span style="margin-left: 10%;">'+(data[i].amount / (1e9)).toFixed() +'</span>'+
         '<span style="float: right;margin-right: 20px;">'+data[i].created_at+'</span>'+
         '</div>'
