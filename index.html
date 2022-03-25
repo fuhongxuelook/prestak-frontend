@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./vue/index.css" />
+    <link rel="stylesheet" href="./css/index.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.0.2/bignumber.min.js'></script>
+</head>
+
+<body>
+    <div class="pageContent" id="app">
+        <div class="box">
+            <header class="titleArea">
+                <img src="./img/BANNER.png" alt="" class="pageTitle">
+                <!-- <h1 class="pageTitle"></h1> -->
+                <div id="connect-wallet" class="wallet-total">
+                    <span>Connect Wallet</span>
+                </div>
+            </header>
+            <div class="summArea">
+                <div class="summItem">
+                    <img src="./img/rank.svg">
+                    <div class="summItemCount">
+                        <p class="summTitle">RANK</p>
+                        <p class="money-three summCount">00</p>
+                    </div>
+                </div>
+                <div class="divide"></div>
+                <div class="summItem">
+                    <img src="./img/money.svg">
+                    <div class="summItemCount">
+                        <p class="summTitle">Withdrawable balance </p>
+                        <p class="money-four summCount">00</p>
+                    </div>
+                </div>
+                <div class="divide"></div>
+                <div class="summBtnArea">
+                    <button id="withdraw-shib" class="check-btn">WITHDRAW SHIB</button>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>REFRESH</span></button>
+                </div>
+            </div>
+            <div class="contentArea">
+                <!-- <div class="activityArea">
+                    <p>活动细则</p>
+                    <ul>
+                        <li>1.活动细则细则动细则细则细则细</li>
+                        <li>2.活动细则细动细则细则则</li>
+                        <li>3.活动细则细动细则细则则细则细细则细</li>
+                        <li>4.活动细则细动细则细则则细则细细则细细则</li>
+                    </ul>
+                </div> -->
+                <div class = "eventDetail">
+                    <p>Event Details</p>
+                    <ul>
+                        <li>1. March 28 - April 6, 2022 (10 days)</li>
+                        <li>2. Only staking SKP can join the game</li>
+                        <li>3. Please staking more than 1 billion SKP</li>
+                        <li>4. You can increase SKP when in the game time</li>
+                        <li>5. Only the top 1000 will win the game at last</li>
+                        <li>6. The winner will enter to 'AKP Genesis Mining'</li>
+                        <li>7. Click 'Refresh' to show your rank real-time</li>
+                        <li>8. Click 'WITHDRAW SHIB' to get your SHIB bonus</li>
+                    </ul>
+
+
+                </div>
+                <div class="stakedArea">
+                    <p class="stakedCount">
+                        <span class="stakedTitle">staked：</span>
+                        <span id="skp-balance" class="stakedCount">00.00</span>
+                        <span class="skpUnit">SKP</span>
+                    </p>
+                    <div class="progress-chart">
+                        <span id="stake_num" style="margin-left: 20px;">00 </span>
+                        <span id="skp_total" style="margin-right: 20px;float: right;">(00.00) max </span>
+                    </div>
+                    <div class="sliderArea">
+                        <el-slider v-model="slider" :marks="marks"></el-slider>
+
+
+                    </div>
+                    <div class="stakedBtnArea">
+                        <button id="stake-skp" class="approval-btn">STAKE</button>
+                        <button class="approval-btn">BUY SKP</button>
+                    </div>
+                </div>
+            </div>
+            <!--   <div class='AKPArea'>
+                 <div class="card">
+                    <p class="title">AKP经济模型</p>
+                    <p class="content">
+                        221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212
+                    </p>
+                </div>
+                <div class="card">
+                    <p class="title">AKP落地生态</p>
+                    <p class="content">221112121221212</p>
+                </div>
+            </div> -->
+            <div class="akpImgArea">
+                <img src="./img/akpPage1.png" alt="">
+                <img src="./img/akpPage2.png" alt="">
+            </div>
+
+
+            <div>
+
+            </div>
+            <div class="tableArea">
+                <el-table :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
+                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%">
+                    <el-table-column align="center" prop="code" label="Rank" width="120">
+                    </el-table-column>
+                    <el-table-column prop="address" align="center" label="Address">
+                    </el-table-column>
+                    <el-table-column prop="amount" align="center" label="Quantity">
+                    </el-table-column>
+                    <el-table-column prop="created_at" align="center" label="Time" width="180">
+                    </el-table-column>
+                </el-table>
+            </div>
+
+
+            <!-- <div class="box-content">
+                <div class="money-progress">
+                    <div class="progress-content">
+
+
+                        <div class="progress-border bar">
+                            <span class="progress-end radio"></span></div>
+
+                        <p class="progress-num">
+                            <span style="margin-left: 2px;">0%</span>
+                            <span>10%</span>
+                            <span>20%</span>
+                            <span>30%</span>
+                            <span>40%</span>
+                            <span>50%</span>
+                            <span>60%</span>
+                            <span>70%</span>
+                            <span>80%</span>
+                            <span>90%</span>
+                            <span>100%</span>
+                        </p>
+                        <input id="skp_input" class="progress-input">
+                    </div>
+                    <div class="progress-content-right"></div>
+                </div>
+                <div class="bottmon-box" style="height:300px;overflow-y:auto">
+                    <div class="bottom-data">
+                        <span style="margin-left: 10px;">1.</span>
+                        <span style="margin-left: 6%;">hhhhhhhhhhhhhhhhhhh</span>
+                        <span style="float: right;margin-right: 20px;">ssssssss</span>
+                    </div>
+                </div>
+                <div class="page-data">
+                    <span>first</span>
+                    <span>last</span>
+                    <span>next</span>
+                    <span>total <b> 0</b></span>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+
+</body>
+<script src="./vue/vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="./vue/index.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    handleStakeStyle($('#skp-balance').html())
+    var html = '';
+    var current_page;
+    var data = [
+
+    ]
+    for (var i = 0; i < data.length; i++) {
+        var code = i + 1
+        html += '<div class="bottom-data">' +
+            '<span style="margin-left: 10px;">' + code + '</span>' +
+            '<span style="margin-left: 6%;">' + data[i].address + '</span>' +
+            '<span style="margin-left: 10%;">' + data[i].amount + '</span>' +
+            '<span style="float: right;margin-right: 20px;">' + data[i].created_at + '</span>' +
+            '</div>'
+    }
+    $('.bottmon-box').html(html)
+    // 给数字加样式
+    function handleStakeStyle(val) {
+        const dataArray = val.split('')
+        const dataHtml = dataArray.map(item => {
+            if (item !== '.') {
+                return `<span class = "countItem">${item}</span>`
+            } else {
+                return `<span class = "splitItem">${item}</span>`
+            }
+        })
+        const html = dataHtml.join('');
+        $('#skp-balance').html(html)
+    }
+
+    function listDataDeal(data) {
+        html = ""
+        for (var i = 0; i < data.length; i++) {
+            var code = i + 1
+            html += '<div class="bottom-data">' +
+                '<span style="margin-left: 10px;">' + code + '</span>' +
+                '<span style="margin-left: 6%;">' + data[i].address + '</span>' +
+                '<span style="margin-left: 10%;">' + (data[i].amount / (1e9)).toFixed() + '</span>' +
+                '<span style="float: right;margin-right: 20px;">' + data[i].created_at + '</span>' +
+                '</div>'
+        }
+        $('.bottmon-box').html(html)
+    }
+    $.ajax({
+        type: "GET",
+        url: 'https://shibkingpro.com/prestake/list?page=1',
+        data: {},
+        dataType: "json",
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (data) {
+            listDataDeal(data.list)
+            $('.page-data b').html(data.total);
+            current_page = data.current_page;
+        },
+        error: function () {
+
+        }
+    });
+
+    function listFressh(page) {
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/list',
+            data: {
+                page: page
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                listDataDeal(data.list)
+                $('.page-data b').html(data.total)
+                current_page = data.current_page
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    var page = 1
+    var limit = new BigNumber(1000000000);
+    $('.page-data span').eq(0).click(function () {
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/list?page=1',
+            data: {
+                page: 1
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                listDataDeal(data.list)
+                $('.page-data b').html(data.total);
+                current_page = data.current_page;
+            },
+            error: function () {
+
+            }
+        });
+    })
+    $('.page-data span').eq(1).click(function () {
+        page = page - 1;
+        if (page == 0) {
+            page = 1
+        }
+        console.log(page)
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/list',
+            data: {
+                page: page
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                listDataDeal(data.list)
+                $('.page-data b').html(data.total);
+                current_page = data.current_page;
+            },
+            error: function () {
+
+            }
+        });
+    })
+    $('.page-data span').eq(2).click(function () {
+        page = page + 1;
+        console.log(page)
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/list',
+            data: {
+                page: page
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                listDataDeal(data.list)
+                $('.page-data b').html(data.total)
+            },
+            error: function () {
+
+            }
+        });
+    })
+
+
+    $(window).unbind("mousemove");
+    window.RadioLeft = $(".radio").offset().left;
+    window.BoxLeft = $(".bar").offset().left;
+    window.BoxWidth = $(".bar").width();
+    window.RadioWidth = $(".radio").width();
+    $('.progress-input').keyup(function () {
+        let val = jQuery("#skp_input").val();
+        $(".radio").css("left", "0px");
+        jQuery("#stake_num").html(val);
+    });
+
+    $(".radio").mousedown(async function (e) {
+        $('.progress-input').val("");
+        var obj = $(this)
+        let skpAmount = await skpObj.balanceOf(myAddress);
+        let bigSkpAmount = new BigNumber(skpAmount.toString());
+
+        var X = e.pageX;
+        $(window).bind("mousemove");
+        $(window).mousemove(function (e) {
+            if (e.pageX < BoxLeft) {
+                obj.css("left", "0px");
+                $("#skp_input").val("0%");
+
+            } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
+                obj.css("right", "0px");
+                $("#skp_input").val("100%");
+            } else {
+                obj.css("left", e.pageX - RadioLeft + "px");
+                var newRadioLeft = obj.offset().left;
+                var newBoxLeft = obj.parent(".bar").offset().left;
+                var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100;
+                val = Math.floor(val);
+                if (val > 100) {
+                    val = 100;
+                }
+
+                let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
+                jQuery("#stake_num").html(amount.toString());
+                $("#skp_input").val(val);
+                $(".loading").width(val);
+            }
+        });
+    });
+    $(".radio").mouseup(function (e) {
+        $(window).unbind("mousemove");
+    });
+    $(window).mouseup(function (e) {
+        $(this).unbind("mousemove");
+    });
+    let abi = [{
+            "inputs": [],
+            "name": "Redeem",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "SKPTotalStakedAmount",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }],
+            "name": "Stake",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                }
+            ],
+            "name": "allowance",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "approve",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }],
+            "name": "balanceOf",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "checkout",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "claimRewards",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getNumberOfDistributorHolders",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getSHIBTotalDistributed",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address[]",
+                "name": "stakers",
+                "type": "address[]"
+            }],
+            "name": "migrate",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "totalSupply",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }],
+            "name": "withdrawableSHIBOf",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+
+    let signer;
+
+    let Contract = '0xE8B4C4b938cc5043c7A1BE16B547Cf7E03bC74f3';
+    let SKP = "0x60450e4F1246fedb38F83062BCB2BebAab6d110B";
+
+    let prestake;
+    let skpObj;
+
+    let myAddress;
+
+    function showResult(node, msg) {
+        node.text(msg);
+    }
+
+    jQuery("#connect-wallet").click(async function () {
+        await window.ethereum.enable()
+        if (typeof window.ethereum == 'undefined') {
+            alert('MetaMask is not installed!');
+        } else {
+            if (window.ethereum.chainId != "0x61") { //Test 0x61 BSC MAIN 0x38 
+                showResult(jQuery("#connect-wallet"), "Wrong network, please switch to BSC network");
+                return;
+            }
+        }
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // The MetaMask plugin also allows signing transactions to
+        // send ether and pay to change state within the blockchain.
+        // For this, you need the account signer...
+        signer = provider.getSigner();
+        myAddress = await signer.getAddress();
+        prestake = new ethers.Contract(Contract, abi, signer);
+        skpObj = new ethers.Contract(SKP, abi, signer);
+        showResult(jQuery("#connect-wallet"), myAddress);
+        info();
+
+    });
+
+    jQuery("#stake-skp").click(async function () {
+        let stakeNum = jQuery("#stake_num").html();
+
+        stake(stakeNum);
+    });
+
+
+    jQuery("#redeem-skp").click(async function () {
+        redeem();
+    });
+
+    jQuery("#withdraw-shib").click(async function () {
+        withdraw();
+
+    });
+
+    jQuery("#info").click(async function () {
+        info();
+
+    });
+
+    jQuery("#refresh").click(async function () {
+        refresh();
+
+    });
+
+    async function stake(amount) {
+        let bigBal = new BigNumber(amount.toString());
+        bigBal = bigBal.multipliedBy(1e9);
+        if (bigBal.comparedTo(limit) < 1) {
+            alert("skp balance is not enough");
+            return;
+        }
+        let allowance = await skpObj.allowance(myAddress, Contract);
+        let bigAllowance = new BigNumber(allowance.toString());
+
+        if (bigAllowance.comparedTo(bigBal) == -1) {
+            await skpObj.approve(Contract, ethers.constants.MaxUint256);
+        }
+        console.log(bigBal.toString());
+        let decimals = 9;
+        let input = amount; // Note: this is a string, e.g. user input
+        let ethAmount = ethers.utils.parseUnits(input, decimals)
+        await prestake.Stake(ethAmount);
+    }
+
+    async function redeem() {
+        await prestake.Redeem();
+    }
+
+    async function withdraw() {
+        await prestake.claimRewards()
+    }
+
+    async function refresh() {
+        await prestake.checkout();
+    }
+
+
+
+    async function info() {
+        let shib = await prestake.withdrawableSHIBOf(myAddress);
+        let bigShib = new BigNumber(shib.toString());
+
+        let bal = await prestake.balanceOf(myAddress);
+        let bigBal = new BigNumber(bal.toString());
+
+        let skp = await skpObj.balanceOf(myAddress);
+        let bigSkp = new BigNumber(skp.toString());
+        // 增加样式
+        handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
+        // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
+
+        jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString() + " max");
+
+        $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
+        await getAddressRank(myAddress);
+
+        if (bigBal.comparedTo(limit) >= 1) {
+            stakeInDB(bal.toString());
+        }
+        getAddressRank(bal.toString());
+        listFressh(current_page);
+    }
+
+    function getAddressRank(bal) {
+
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/rank',
+            data: {
+                amount: bal.toString()
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                $('.money-three').html(data);
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function timestampConvert(tm) {
+        if (tm == 0) {
+            return "NaN";
+        }
+        var sd = new Date(tm * 1000).toLocaleDateString("en-US")
+        var st = new Date(tm * 1000).toLocaleTimeString("en-US")
+        return sd + " - " + st;
+    }
+
+    function stakeInDB(amount) {
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/stake',
+            data: {
+                address: myAddress,
+                amount: amount
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {},
+            error: function () {
+
+            }
+        });
+    }
+</script>
+<script>
+    new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    slider: 0,
+                    marks: {
+                        0: '0',
+                        10: '10',
+                        20: '20',
+                        30: '30',
+                        40: '40',
+                        50: '50',
+                        60: '60',
+                        70: '70',
+                        80: '80',
+                        90: '90',
+                        100: '100',
+                        //   50: {
+                        //     style: {
+                        //       color: '#1989FA'
+                        //     },
+                        //     // label: this.$createElement('strong', '50%')
+                        //   }
+                    },
+                    tableData: [{
+                        code: '1',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '2',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '3',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '4',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '5',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '6',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '7',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }, {
+                        code: '8',
+                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                        amount: '693811980338605',
+                        created_at: '2022-03-03  21:09:57'
+                    }]
+                }
+            },
+            methods: {
+                rowStyle({
+                    row,
+                    column,
+                    rowIndex,
+                    columnIndex
+                }) {
+                    return 'background:#121744;border-bottom:2px solid #0B0E37;line-height:52px;color: #FFFFFF;font-size: 14px;';
+                }
+            }
+        },
+
+    )
+</script>
+
+</html>

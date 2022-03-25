@@ -1,0 +1,23 @@
+{
+  "name": "prestake-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "http-server  ./ -o --port 8085"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuhongxuelook/prestake-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fuhongxuelook/prestake-frontend/issues"
+  },
+  "homepage": "https://github.com/fuhongxuelook/prestake-frontend#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
