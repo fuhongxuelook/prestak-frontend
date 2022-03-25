@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./vue/index.css" />
     <link rel="stylesheet" href="./css/index.css">
-
-
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
     <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.0.2/bignumber.min.js'></script>
@@ -21,8 +19,7 @@
         <div class="box">
             <header class="titleArea">
                 <img src="./img/BANNER.png" alt="" class="pageTitle">
-                <!-- <h1 class="pageTitle"></h1> -->
-                <div id="connect-wallet" class="wallet-total">
+                <div id="connect-wallet" class="wallet-total" style = "color:#fff">
                     <span>Connect Wallet</span>
                 </div>
             </header>
@@ -58,7 +55,7 @@
                         <li>4.活动细则细动细则细则则细则细细则细细则</li>
                     </ul>
                 </div> -->
-                <div class = "eventDetail">
+                <div class="eventDetail">
                     <p>Event Details</p>
                     <ul>
                         <li>1. March 28 - April 6, 2022 (10 days)</li>
@@ -79,18 +76,23 @@
                         <span id="skp-balance" class="stakedCount">00.00</span>
                         <span class="skpUnit">SKP</span>
                     </p>
-                    <div class="progress-chart">
+                    <!-- <div class="progress-chart">
                         <span id="stake_num" style="margin-left: 20px;">00 </span>
-                        <span id="skp_total" style="margin-right: 20px;float: right;">(00.00) max </span>
+                       
+                    </div> -->
+                    <div class="inputNumberArea">
+                        <span id="skp_total" class="inputTotal">(00.00) max </span>
+                        <el-input-number v-model="skpNumber" :controls="false" :min="0" @change="changeInputNumber">
+                        </el-input-number>
                     </div>
                     <div class="sliderArea">
-                        <el-slider v-model="slider" :marks="marks"></el-slider>
+                        <el-slider v-model="slider" :marks="marks" @change="sliderChange"></el-slider>
 
 
                     </div>
                     <div class="stakedBtnArea">
                         <button id="stake-skp" class="approval-btn">STAKE</button>
-                        <button class="approval-btn">BUY SKP</button>
+                        <a class="approval-btn" href = "https://pancakeswap.finance/swap?outputCurrency=0xcd79b84a0611971727928e1b7aee9f8c61ede777">BUY SKP</a>
                     </div>
                 </div>
             </div>
@@ -117,8 +119,8 @@
             </div>
             <div class="tableArea">
                 <el-table :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
-                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%">
-                    <el-table-column align="center" prop="code" label="Rank" width="120">
+                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%"rowKey = "id">
+                    <el-table-column align="center" prop="id" label="Rank" width="120">
                     </el-table-column>
                     <el-table-column prop="address" align="center" label="Address">
                     </el-table-column>
@@ -127,8 +129,13 @@
                     <el-table-column prop="created_at" align="center" label="Time" width="180">
                     </el-table-column>
                 </el-table>
-            </div>
 
+            </div>
+            <div class="paginationArea">
+                <el-pagination layout=" total,prev, pager, next, jumper" background :total="tableLength"
+                    :page-size="2" :current-page.sync="currentPage" @current-change="currentChange" prev-text="perv"
+                    next-text="next" />
+            </div>
 
             <!-- <div class="box-content">
                 <div class="money-progress">
@@ -169,7 +176,6 @@
                     <span>total <b> 0</b></span>
                 </div>
             </div> -->
-
         </div>
     </div>
 
@@ -178,212 +184,194 @@
 <script src="./vue/vue.js" type="text/javascript" charset="utf-8"></script>
 <script src="./vue/index.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    handleStakeStyle($('#skp-balance').html())
-    var html = '';
-    var current_page;
-    var data = [
+    var VueComponent = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    skpNumber: 0,
+                    slider: 0,
+                    tableLength:0,
+                    marks: {
+                        0: '0',
+                        10: '10',
+                        20: '20',
+                        30: '30',
+                        40: '40',
+                        50: '50',
+                        60: '60',
+                        70: '70',
+                        80: '80',
+                        90: '90',
+                        100: '100',
+                    },
+                    tableData:[],
+                    // tableData: [{
+                    //     code: '1',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '2',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '3',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '4',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '5',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '6',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '7',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }, {
+                    //     code: '8',
+                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
+                    //     amount: '693811980338605',
+                    //     created_at: '2022-03-03  21:09:57'
+                    // }],
+                    tableListLength: 0,
+                    currentPage: 1
+                }
+            },
+            created() {
+                this.getTableListData()
 
-    ]
-    for (var i = 0; i < data.length; i++) {
-        var code = i + 1
-        html += '<div class="bottom-data">' +
-            '<span style="margin-left: 10px;">' + code + '</span>' +
-            '<span style="margin-left: 6%;">' + data[i].address + '</span>' +
-            '<span style="margin-left: 10%;">' + data[i].amount + '</span>' +
-            '<span style="float: right;margin-right: 20px;">' + data[i].created_at + '</span>' +
-            '</div>'
-    }
-    $('.bottmon-box').html(html)
+            },
+            methods: {
+                sliderChange(val) {
+                    this.skpNumber = val
+
+                },
+                changeInputNumber(val) {
+                    this.slider = 0
+                },
+                currentChange(val) {
+                    this.currentPage = val
+                    this.getTableListData()
+                },
+                rowStyle({
+                    row,
+                    column,
+                    rowIndex,
+                    columnIndex
+                }) {
+                    return 'background:#121744;border-bottom:2px solid #0B0E37;line-height:52px;color: #FFFFFF;font-size: 14px;';
+                },
+                getTableListData() {
+                    $.ajax({
+                        type: "GET",
+                        url: `https://shibkingpro.com/prestake/list?page=${this.currentPage}`,
+                        data: {},
+                        dataType: "json",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: (data)=> {
+                            const resData = data.list||[];
+                            this.tableData =resData
+                            this.tableLength = resData.length
+                            this.currentPage = data.current_page;
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            }
+        },
+
+    )
+</script>
+<script>
+    // 处理staked 展示样式
+    handleStakeStyle($('#skp-balance').html())
     // 给数字加样式
     function handleStakeStyle(val) {
-        const dataArray = val.split('')
-        const dataHtml = dataArray.map(item => {
-            if (item !== '.') {
-                return `<span class = "countItem">${item}</span>`
-            } else {
-                return `<span class = "splitItem">${item}</span>`
-            }
-        })
-        const html = dataHtml.join('');
+        const html = `<span class = "countItem">${val}</span>`
+        // const dataArray = val.split('')
+        // const dataHtml = dataArray.map(item => {
+        //     if (item !== '.') {
+        //         return `<span class = "countItem">${item}</span>`
+        //     } else {
+        //         return `<span class = "splitItem">${item}</span>`
+        //     }
+        // })
+        // const html = dataHtml.join('');
         $('#skp-balance').html(html)
     }
 
-    function listDataDeal(data) {
-        html = ""
-        for (var i = 0; i < data.length; i++) {
-            var code = i + 1
-            html += '<div class="bottom-data">' +
-                '<span style="margin-left: 10px;">' + code + '</span>' +
-                '<span style="margin-left: 6%;">' + data[i].address + '</span>' +
-                '<span style="margin-left: 10%;">' + (data[i].amount / (1e9)).toFixed() + '</span>' +
-                '<span style="float: right;margin-right: 20px;">' + data[i].created_at + '</span>' +
-                '</div>'
-        }
-        $('.bottmon-box').html(html)
+    function listFressh() {
+        VueComponent.getTableListData()
     }
-    $.ajax({
-        type: "GET",
-        url: 'https://shibkingpro.com/prestake/list?page=1',
-        data: {},
-        dataType: "json",
-        xhrFields: {
-            withCredentials: true
-        },
-        success: function (data) {
-            listDataDeal(data.list)
-            $('.page-data b').html(data.total);
-            current_page = data.current_page;
-        },
-        error: function () {
-
-        }
-    });
-
-    function listFressh(page) {
-        $.ajax({
-            type: "GET",
-            url: 'https://shibkingpro.com/prestake/list',
-            data: {
-                page: page
-            },
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (data) {
-                listDataDeal(data.list)
-                $('.page-data b').html(data.total)
-                current_page = data.current_page
-            },
-            error: function () {
-
-            }
-        });
-    }
-
     var page = 1
     var limit = new BigNumber(1000000000);
-    $('.page-data span').eq(0).click(function () {
-        $.ajax({
-            type: "GET",
-            url: 'https://shibkingpro.com/prestake/list?page=1',
-            data: {
-                page: 1
-            },
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (data) {
-                listDataDeal(data.list)
-                $('.page-data b').html(data.total);
-                current_page = data.current_page;
-            },
-            error: function () {
+    // $(window).unbind("mousemove");
+    // window.RadioLeft = $(".radio").offset().left;
+    // window.BoxLeft = $(".bar").offset().left;
+    // window.BoxWidth = $(".bar").width();
+    // window.RadioWidth = $(".radio").width();
+    // $('.progress-input').keyup(function () {
+    //     let val = jQuery("#skp_input").val();
+    //     $(".radio").css("left", "0px");
+    //     jQuery("#stake_num").html(val);
+    // });
 
-            }
-        });
-    })
-    $('.page-data span').eq(1).click(function () {
-        page = page - 1;
-        if (page == 0) {
-            page = 1
-        }
-        console.log(page)
-        $.ajax({
-            type: "GET",
-            url: 'https://shibkingpro.com/prestake/list',
-            data: {
-                page: page
-            },
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (data) {
-                listDataDeal(data.list)
-                $('.page-data b').html(data.total);
-                current_page = data.current_page;
-            },
-            error: function () {
+    // $(".radio").mousedown(async function (e) {
+    //     $('.progress-input').val("");
+    //     var obj = $(this)
+    //     let skpAmount = await skpObj.balanceOf(myAddress);
+    //     let bigSkpAmount = new BigNumber(skpAmount.toString());
 
-            }
-        });
-    })
-    $('.page-data span').eq(2).click(function () {
-        page = page + 1;
-        console.log(page)
-        $.ajax({
-            type: "GET",
-            url: 'https://shibkingpro.com/prestake/list',
-            data: {
-                page: page
-            },
-            dataType: "json",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (data) {
-                listDataDeal(data.list)
-                $('.page-data b').html(data.total)
-            },
-            error: function () {
+    //     var X = e.pageX;
+    //     $(window).bind("mousemove");
+    //     $(window).mousemove(function (e) {
+    //         if (e.pageX < BoxLeft) {
+    //             obj.css("left", "0px");
+    //             $("#skp_input").val("0%");
 
-            }
-        });
-    })
+    //         } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
+    //             obj.css("right", "0px");
+    //             $("#skp_input").val("100%");
+    //         } else {
+    //             obj.css("left", e.pageX - RadioLeft + "px");
+    //             var newRadioLeft = obj.offset().left;
+    //             var newBoxLeft = obj.parent(".bar").offset().left;
+    //             var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100;
+    //             val = Math.floor(val);
+    //             if (val > 100) {
+    //                 val = 100;
+    //             }
 
-
-    $(window).unbind("mousemove");
-    window.RadioLeft = $(".radio").offset().left;
-    window.BoxLeft = $(".bar").offset().left;
-    window.BoxWidth = $(".bar").width();
-    window.RadioWidth = $(".radio").width();
-    $('.progress-input').keyup(function () {
-        let val = jQuery("#skp_input").val();
-        $(".radio").css("left", "0px");
-        jQuery("#stake_num").html(val);
-    });
-
-    $(".radio").mousedown(async function (e) {
-        $('.progress-input').val("");
-        var obj = $(this)
-        let skpAmount = await skpObj.balanceOf(myAddress);
-        let bigSkpAmount = new BigNumber(skpAmount.toString());
-
-        var X = e.pageX;
-        $(window).bind("mousemove");
-        $(window).mousemove(function (e) {
-            if (e.pageX < BoxLeft) {
-                obj.css("left", "0px");
-                $("#skp_input").val("0%");
-
-            } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
-                obj.css("right", "0px");
-                $("#skp_input").val("100%");
-            } else {
-                obj.css("left", e.pageX - RadioLeft + "px");
-                var newRadioLeft = obj.offset().left;
-                var newBoxLeft = obj.parent(".bar").offset().left;
-                var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100;
-                val = Math.floor(val);
-                if (val > 100) {
-                    val = 100;
-                }
-
-                let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
-                jQuery("#stake_num").html(amount.toString());
-                $("#skp_input").val(val);
-                $(".loading").width(val);
-            }
-        });
-    });
-    $(".radio").mouseup(function (e) {
-        $(window).unbind("mousemove");
-    });
-    $(window).mouseup(function (e) {
-        $(this).unbind("mousemove");
-    });
+    //             let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
+    //             jQuery("#stake_num").html(amount.toString());
+    //             $("#skp_input").val(val);
+    //             $(".loading").width(val);
+    //         }
+    //     });
+    // });
+    // $(".radio").mouseup(function (e) {
+    //     $(window).unbind("mousemove");
+    // });
+    // $(window).mouseup(function (e) {
+    //     $(this).unbind("mousemove");
+    // });
     let abi = [{
             "inputs": [],
             "name": "Redeem",
@@ -589,8 +577,7 @@
     });
 
     jQuery("#stake-skp").click(async function () {
-        let stakeNum = jQuery("#stake_num").html();
-
+        const stakeNum = VueComponent._data.skpNumber
         stake(stakeNum);
     });
 
@@ -670,7 +657,7 @@
             stakeInDB(bal.toString());
         }
         getAddressRank(bal.toString());
-        listFressh(current_page);
+        listFressh();
     }
 
     function getAddressRank(bal) {
@@ -722,87 +709,6 @@
         });
     }
 </script>
-<script>
-    new Vue({
-            el: '#app',
-            data: function () {
-                return {
-                    slider: 0,
-                    marks: {
-                        0: '0',
-                        10: '10',
-                        20: '20',
-                        30: '30',
-                        40: '40',
-                        50: '50',
-                        60: '60',
-                        70: '70',
-                        80: '80',
-                        90: '90',
-                        100: '100',
-                        //   50: {
-                        //     style: {
-                        //       color: '#1989FA'
-                        //     },
-                        //     // label: this.$createElement('strong', '50%')
-                        //   }
-                    },
-                    tableData: [{
-                        code: '1',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '2',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '3',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '4',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '5',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '6',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '7',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }, {
-                        code: '8',
-                        address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                        amount: '693811980338605',
-                        created_at: '2022-03-03  21:09:57'
-                    }]
-                }
-            },
-            methods: {
-                rowStyle({
-                    row,
-                    column,
-                    rowIndex,
-                    columnIndex
-                }) {
-                    return 'background:#121744;border-bottom:2px solid #0B0E37;line-height:52px;color: #FFFFFF;font-size: 14px;';
-                }
-            }
-        },
 
-    )
-</script>
 
 </html>

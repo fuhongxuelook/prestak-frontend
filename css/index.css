@@ -13,7 +13,7 @@
 }
 
 .pageTitle {
-    width:500px;
+    width: 500px;
 }
 
 .herder-box {
@@ -50,6 +50,11 @@
     font-weight: 500;
     color: #345BCE;
 }
+.wallet-total span:hover{
+    border: 1px solid #345BCE;
+    box-shadow:0px 0px 2px 2px #345BCE
+}
+
 
 .wallet-total select {
     border-radius: 100px;
@@ -175,6 +180,11 @@
     background: transparent;
     margin-left: 28px;
 }
+.refresh-btn:hover{
+    border: 1px solid #345BCE;
+    box-shadow:0px 0px 2px 2px #345BCE
+}
+
 
 .refresh-btn img {
     margin-right: 5px;
@@ -251,13 +261,18 @@
     color: #FFFFFF;
     line-height: 48px;
 }
-
+.inputNumberArea{
+    position: relative;
+    margin-top: 32px;
+    width: 703px;
+}
 .progress-border {
     background: rgba(201, 206, 255, 0.90);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     margin-top: 20px;
     width: 460px;
+    
 }
 
 .progress-end {
@@ -289,6 +304,7 @@
 }
 
 .approval-btn {
+    text-decoration: none;
     cursor: pointer;
     width: 112px;
     height: 40px;
@@ -301,7 +317,7 @@
     line-height: 40px;
     text-align: center;
     border: none;
-    margin-right:24px;
+    margin-right: 24px;
 }
 
 .radio {
@@ -357,6 +373,9 @@
     color: #FFFFFF;
     border: none;
 }
+.check-btn:hover{
+    background: #4d6ed1;
+}
 
 .contentArea {
     display: flex;
@@ -390,14 +409,16 @@
     color: #D0D2EB;
     line-height: 22px;
 }
-.eventDetail{
+
+.eventDetail {
     /* width:600px; */
     color: #fff;
     background-color: #16183f;
-    border-radius:16px;
+    border-radius: 16px;
     box-sizing: border-box;
-    padding:20px;
+    padding: 20px;
 }
+
 .eventDetail p {
     text-align: left;
     padding-bottom: 26px;
@@ -407,6 +428,7 @@
     color: #efcd39;
     box-sizing: border-box;
 }
+
 .eventDetail ul li {
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
@@ -414,16 +436,17 @@
     color: #D0D2EB;
     line-height: 30px;
 }
+
 .stakedArea {
-    padding-left:90px;
+    padding-left: 90px;
     box-sizing: border-box;
     min-width: 703px;
     /* height:445px; */
-    flex:auto;
+    flex: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items:center;
+    align-items: center;
 }
 
 .stakedCount {
@@ -459,11 +482,12 @@
 }
 
 .countItem {
+    padding:0px 20px;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 12px;
-    width: 62px;
     height: 76px;
     background: #1D2368;
     border-radius: 10px;
@@ -485,19 +509,22 @@
     box-sizing: border-box;
 
 }
-.akpImgArea{
+
+.akpImgArea {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-   padding-bottom:35px;
+    padding-bottom: 35px;
     box-sizing: border-box;
 
 }
-.akpImgArea img{
+
+.akpImgArea img {
     width: calc(50% - 8px);
     /* height: 302px; */
 }
+
 .AKPArea .card {
     width: calc(50% - 8px);
     height: 302px;
@@ -530,19 +557,29 @@
 }
 
 .stakedBtnArea {
-    margin-top:70px;
-    display:flex;
+    margin-top: 70px;
+    display: flex;
     align-items: center;
     justify-content: center;
 
 }
-
+.inputTotal{
+    position: absolute;
+    right:20px;
+    top:15px;
+    z-index:9999;
+    color: #fff;
+}
 .sliderArea {
-    width:703px;
+    width: 703px;
     box-sizing: border-box;
     margin-top: 40px;
 }
-
+.paginationArea{
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
 .el-table::before {
     height: 0px;
 }
@@ -582,4 +619,46 @@
     height: 10px;
     background: #39BFFA;
     border: 3px solid #39BFFA;
+}
+
+.el-table__empty-block {
+    background: #0B0E37;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+    background: #121744;
+    color: #FFFFFF;
+
+    border-radius: 4px;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background: #121744;
+    color: #FFFFFF;
+    border: 1px solid #1B2B6C;
+}
+
+.el-pagination__editor.el-input .el-input__inner {
+    background: #121744;
+    color: #FFFFFF;
+    border: 1px solid #1B2B6C;
+}
+
+.el-pagination__jump {
+    color: #FFFFFF;
+}
+.el-pagination__total{
+    color: #FFFFFF;
+}
+.el-input-number.is-without-controls .el-input__inner{
+    border:1px solid #345BCE;
+    background:#15194A;
+    text-align:left;
+    width:705px;
+    color: #FFFFFF;
+    height:48px;
+    border-radius: 10px
+
 }
