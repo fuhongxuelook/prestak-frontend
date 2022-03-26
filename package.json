@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "http-server  ./ -o --port 8085"
+    "dev": "http-server  ./ -o --port 8088"
 },
   "repository": {
     "type": "git",

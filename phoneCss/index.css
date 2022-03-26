@@ -2,7 +2,7 @@
     background: #0B0E37;
     padding: 0rem 0.5rem;
     box-sizing: border-box;
-    padding-bottom: 15rem;
+    padding-bottom: 0.8rem;
 }
 
 .titleArea {
@@ -19,6 +19,7 @@
     height:2rem;
 }
 .wallet-total{
+    font-size:0.56rem;
     padding-top: 0.5rem;
     padding-bottom:0.8rem;
     align-self: flex-end;
