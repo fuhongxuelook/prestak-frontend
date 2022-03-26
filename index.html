@@ -81,7 +81,7 @@
                        
                     </div> -->
                     <div class="inputNumberArea">
-                        <span id="skp_total" class="inputTotal">(00.00) max </span>
+                        <span id="skp_total" class="inputTotal">(00.00) </span>
                         <el-input-number v-model="skpNumber" :controls="false" :min="0" @change="changeInputNumber">
                         </el-input-number>
                     </div>
@@ -256,7 +256,9 @@
             },
             methods: {
                 sliderChange(val) {
-                    this.skpNumber = val
+                    let t = jQuery("#skp_total").html()
+                    console.log(t)
+                    this.skpNumber = ((val / 100) * t).toFixed()
 
                 },
                 changeInputNumber(val) {
@@ -285,7 +287,7 @@
                         },
                         success: (data)=> {
                             const resData = data.list||[];
-                            this.tableData =resData
+                            this.tableData = resData
                             this.tableLength = resData.length
                             this.currentPage = data.current_page;
                         },
@@ -616,7 +618,7 @@
         }
         console.log(bigBal.toString());
         let decimals = 9;
-        let input = amount; // Note: this is a string, e.g. user input
+        let input = amount.toString(); // Note: this is a string, e.g. user input
         let ethAmount = ethers.utils.parseUnits(input, decimals)
         await prestake.Stake(ethAmount);
     }
@@ -648,7 +650,7 @@
         handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
         // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
 
-        jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString() + " max");
+        jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString());
 
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
        // await getAddressRank(myAddress);
