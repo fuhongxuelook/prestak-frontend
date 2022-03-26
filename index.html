@@ -220,7 +220,6 @@
                         100: '100%',
                     },
                     tableData: [],
-                    tableListLength: 0,
                     currentPage: 1
                 }
             },
@@ -267,9 +266,10 @@
                         success: (data) => {
                             const resData = data.list || [];
                             this.tableData = resData
-                            this.tableLength = resData.length
+                            this.tableLength = data.total
+                            console.error(data.total)
                             this.currentPage = data.current_page;
-                            this.jumperMax = Math.ceil(resData.length / 50)
+                            this.jumperMax = Math.ceil(data.total / 50)
                             this.isloading = false;
 
                         },
