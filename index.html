@@ -42,7 +42,8 @@
                 <div class="divide"></div>
                 <div class="summBtnArea">
                     <button id="withdraw-shib" class="check-btn">WITHDRAW SHIB</button>
-                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"><span>REFRESH</span></button>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"
+                            :class="{'loading':isloading}"><span>REFRESH</span></button>
                 </div>
             </div>
             <div class="contentArea">
@@ -131,7 +132,7 @@
 
             </div>
             <div class="paginationArea">
-                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="2"
+                <el-pagination layout=" total,prev, pager, next,slot" background :total="tableLength" :page-size="2"
                     :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
                     <span class="tobtn">To</span>
                     <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
@@ -195,6 +196,7 @@
             data: function () {
                 return {
                     skpTotalCount: '00.00',
+                    isloading: false,
                     tableJumper: 1,
                     jumperMax: 1,
                     skpNumber: 0,
@@ -235,7 +237,7 @@
                     this.skpNumber = ((val / 100) * this.skpTotalCount).toFixed()
                 },
                 changeInputNumber(val) {
-                    this.slider = Number(((val / this.skpTotalCount * 100).toFixed()))
+                    this.slider = val/Number(this.skpTotalCount).toFixed(2)
                 },
                 currentChange(val) {
                     this.currentPage = val
@@ -264,8 +266,11 @@
                             this.tableLength = resData.length
                             this.currentPage = data.current_page;
                             this.jumperMax = Math.ceil(resData.length / 50)
+                            this.isloading = false;
+
                         },
                         error: function () {
+                            this.isloading = true;
 
                         }
                     });
@@ -553,6 +558,7 @@
 
 
     async function info() {
+        VueComponent._data.isloading = true;
         let shib = await prestake.withdrawableSHIBOf(myAddress);
         let bigShib = new BigNumber(shib.toString());
 

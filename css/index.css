@@ -13,7 +13,7 @@
 }
 
 .pageTitle {
-    width: 500px;
+    width: 600px;
 }
 
 .herder-box {
@@ -685,4 +685,15 @@
     padding-left:10px;
     cursor:pointer;
     color:#fff;
+}
+@keyframes move{
+    from{
+        transform:rotate(0deg)
+    }
+    to{
+        transform:rotate(360deg)
+    }
+}
+.loading{
+    animation:move 2s ease 0s 5  forwards;
 }
