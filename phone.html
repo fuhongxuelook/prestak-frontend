@@ -428,7 +428,8 @@
         myAddress = await signer.getAddress();
         prestake = new ethers.Contract(Contract, abi, signer);
         skpObj = new ethers.Contract(SKP, abi, signer);
-        showResult(jQuery("#connect-wallet"), myAddress);
+        const omitmyAddress = myAddress.replace(/^(.{4})(.+)(.{4})$/, '$1***$3')
+        showResult(jQuery("#connect-wallet"), omitmyAddress);
         info();
 
     });
