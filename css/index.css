@@ -564,6 +564,7 @@
 
 }
 .inputTotal{
+    cursor: pointer;
     position: absolute;
     right:20px;
     top:15px;
@@ -652,7 +653,7 @@
 .el-pagination__total{
     color: #FFFFFF;
 }
-.el-input-number.is-without-controls .el-input__inner{
+.inputNumberArea .el-input-number.is-without-controls .el-input__inner{
     border:1px solid #345BCE;
     background:#15194A;
     text-align:left;
@@ -661,4 +662,27 @@
     height:48px;
     border-radius: 10px
 
+}
+.paginationArea .el-input-number.is-without-controls .el-input__inner{
+    border:1px solid #345BCE;
+    background:#15194A;
+    width:50px;
+    color: #FFFFFF;
+    height:32px;
+    border-radius: 10px
+
+}
+
+.paginationArea .el-pagination{
+    display: flex;
+    align-items: center;
+}
+.tobtn{
+    color:#fff;
+    padding-left:10px;
+}
+.gobtn{
+    padding-left:10px;
+    cursor:pointer;
+    color:#fff;
 }

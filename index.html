@@ -19,7 +19,7 @@
         <div class="box">
             <header class="titleArea">
                 <img src="./img/BANNER.png" alt="" class="pageTitle">
-                <div id="connect-wallet" class="wallet-total" style = "color:#fff">
+                <div id="connect-wallet" class="wallet-total" style="color:#fff">
                     <span>Connect Wallet</span>
                 </div>
             </header>
@@ -50,9 +50,6 @@
                     <p>活动细则</p>
                     <ul>
                         <li>1.活动细则细则动细则细则细则细</li>
-                        <li>2.活动细则细动细则细则则</li>
-                        <li>3.活动细则细动细则细则则细则细细则细</li>
-                        <li>4.活动细则细动细则细则则细则细细则细细则</li>
                     </ul>
                 </div> -->
                 <div class="eventDetail">
@@ -81,7 +78,8 @@
                        
                     </div> -->
                     <div class="inputNumberArea">
-                        <span id="skp_total" class="inputTotal">(00.00) </span>
+                        <span id="skp_total" class="inputTotal" @click="clickSkpTotalCount">({{skpTotalCount}})max
+                        </span>
                         <el-input-number v-model="skpNumber" :controls="false" :min="0" @change="changeInputNumber">
                         </el-input-number>
                     </div>
@@ -92,7 +90,9 @@
                     </div>
                     <div class="stakedBtnArea">
                         <button id="stake-skp" class="approval-btn">STAKE</button>
-                        <a class="approval-btn" href = "https://pancakeswap.finance/swap?outputCurrency=0xcd79b84a0611971727928e1b7aee9f8c61ede777">BUY SKP</a>
+                        <a class="approval-btn"
+                            href="https://pancakeswap.finance/swap?outputCurrency=0xcd79b84a0611971727928e1b7aee9f8c61ede777">BUY
+                            SKP</a>
                     </div>
                 </div>
             </div>
@@ -100,12 +100,11 @@
                  <div class="card">
                     <p class="title">AKP经济模型</p>
                     <p class="content">
-                        221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212221112121221212
                     </p>
                 </div>
                 <div class="card">
                     <p class="title">AKP落地生态</p>
-                    <p class="content">221112121221212</p>
+                    <p class="content"></p>
                 </div>
             </div> -->
             <div class="akpImgArea">
@@ -119,7 +118,7 @@
             </div>
             <div class="tableArea">
                 <el-table :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
-                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%"rowKey = "id">
+                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%" rowKey="id">
                     <el-table-column align="center" prop="id" label="Rank" width="120">
                     </el-table-column>
                     <el-table-column prop="address" align="center" label="Address">
@@ -132,10 +131,17 @@
 
             </div>
             <div class="paginationArea">
-                <el-pagination layout=" total,prev, pager, next, jumper" background :total="tableLength"
-                    :page-size="2" :current-page.sync="currentPage" @current-change="currentChange" prev-text="perv"
-                    next-text="next" />
+                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="2"
+                    :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
+                    <span class="tobtn">To</span>
+                    <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
+                        :max="jumperMax">
+                    </el-input-number>
+                    <span @click="jumperTable" class="gobtn">Go</span>
+                </el-pagination>
+
             </div>
+
 
             <!-- <div class="box-content">
                 <div class="money-progress">
@@ -188,9 +194,12 @@
             el: '#app',
             data: function () {
                 return {
+                    skpTotalCount: '00.00',
+                    tableJumper: 1,
+                    jumperMax: 1,
                     skpNumber: 0,
                     slider: 0,
-                    tableLength:0,
+                    tableLength: 0,
                     marks: {
                         0: '0%',
                         10: '10%',
@@ -204,48 +213,7 @@
                         90: '90%',
                         100: '100%',
                     },
-                    tableData:[],
-                    // tableData: [{
-                    //     code: '1',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '2',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '3',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '4',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '5',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '6',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '7',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }, {
-                    //     code: '8',
-                    //     address: '0x1a763cD36f9EBF4012B8B1507B849DaB84F4F503',
-                    //     amount: '693811980338605',
-                    //     created_at: '2022-03-03  21:09:57'
-                    // }],
+                    tableData: [],
                     tableListLength: 0,
                     currentPage: 1
                 }
@@ -255,14 +223,19 @@
 
             },
             methods: {
+                jumperTable() {
+                    this.currentPage = this.tableJumper
+                    this.getTableListData()
+                },
+                clickSkpTotalCount() {
+                    this.skpNumber = this.skpTotalCount
+                    this.slider = 100
+                },
                 sliderChange(val) {
-                    let t = jQuery("#skp_total").html()
-                    console.log(t)
-                    this.skpNumber = ((val / 100) * t).toFixed()
-
+                    this.skpNumber = ((val / 100) * this.skpTotalCount).toFixed()
                 },
                 changeInputNumber(val) {
-                    this.slider = 0
+                    this.slider = Number(((val / this.skpTotalCount * 100).toFixed()))
                 },
                 currentChange(val) {
                     this.currentPage = val
@@ -285,11 +258,12 @@
                         xhrFields: {
                             withCredentials: true
                         },
-                        success: (data)=> {
-                            const resData = data.list||[];
+                        success: (data) => {
+                            const resData = data.list || [];
                             this.tableData = resData
                             this.tableLength = resData.length
                             this.currentPage = data.current_page;
+                            this.jumperMax = Math.ceil(resData.length / 50)
                         },
                         error: function () {
 
@@ -307,15 +281,6 @@
     // 给数字加样式
     function handleStakeStyle(val) {
         const html = `<span class = "countItem">${val}</span>`
-        // const dataArray = val.split('')
-        // const dataHtml = dataArray.map(item => {
-        //     if (item !== '.') {
-        //         return `<span class = "countItem">${item}</span>`
-        //     } else {
-        //         return `<span class = "splitItem">${item}</span>`
-        //     }
-        // })
-        // const html = dataHtml.join('');
         $('#skp-balance').html(html)
     }
 
@@ -324,56 +289,6 @@
     }
     var page = 1
     var limit = new BigNumber(1000000000);
-    // $(window).unbind("mousemove");
-    // window.RadioLeft = $(".radio").offset().left;
-    // window.BoxLeft = $(".bar").offset().left;
-    // window.BoxWidth = $(".bar").width();
-    // window.RadioWidth = $(".radio").width();
-    // $('.progress-input').keyup(function () {
-    //     let val = jQuery("#skp_input").val();
-    //     $(".radio").css("left", "0px");
-    //     jQuery("#stake_num").html(val);
-    // });
-
-    // $(".radio").mousedown(async function (e) {
-    //     $('.progress-input').val("");
-    //     var obj = $(this)
-    //     let skpAmount = await skpObj.balanceOf(myAddress);
-    //     let bigSkpAmount = new BigNumber(skpAmount.toString());
-
-    //     var X = e.pageX;
-    //     $(window).bind("mousemove");
-    //     $(window).mousemove(function (e) {
-    //         if (e.pageX < BoxLeft) {
-    //             obj.css("left", "0px");
-    //             $("#skp_input").val("0%");
-
-    //         } else if (e.pageX > (BoxLeft + BoxWidth - RadioWidth)) {
-    //             obj.css("right", "0px");
-    //             $("#skp_input").val("100%");
-    //         } else {
-    //             obj.css("left", e.pageX - RadioLeft + "px");
-    //             var newRadioLeft = obj.offset().left;
-    //             var newBoxLeft = obj.parent(".bar").offset().left;
-    //             var val = ((newRadioLeft - newBoxLeft) / BoxWidth) * 100;
-    //             val = Math.floor(val);
-    //             if (val > 100) {
-    //                 val = 100;
-    //             }
-
-    //             let amount = bigSkpAmount.div(1e9).div(100).multipliedBy(val).toFixed(0);
-    //             jQuery("#stake_num").html(amount.toString());
-    //             $("#skp_input").val(val);
-    //             $(".loading").width(val);
-    //         }
-    //     });
-    // });
-    // $(".radio").mouseup(function (e) {
-    //     $(window).unbind("mousemove");
-    // });
-    // $(window).mouseup(function (e) {
-    //     $(this).unbind("mousemove");
-    // });
     let abi = [{
             "inputs": [],
             "name": "Redeem",
@@ -649,11 +564,11 @@
         // 增加样式
         handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
         // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
-
-        jQuery("#skp_total").html(bigSkp.div(1e9).toFixed(0).toString());
+        VueComponent._data.skpTotalCount = bigSkp.div(1e9).toFixed(0).toString()
+        // jQuery("#skp_total").html();
 
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
-       // await getAddressRank(myAddress);
+        // await getAddressRank(myAddress);
 
         if (bigBal.comparedTo(limit) >= 1) {
             stakeInDB(bal.toString());
