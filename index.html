@@ -486,6 +486,27 @@
                 return;
             }
         }
+        let walletAddress = await window.ethereum.request({
+          method: "eth_requestAccounts",
+          params: [
+            {
+              eth_accounts: {}
+            }
+          ]
+        });
+
+
+        // Runs only they are brand new, or have hit the disconnect button
+        let res = await window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [
+              {
+                eth_accounts: {}
+              }
+            ]
+          });
+
+        console.log(res);
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 

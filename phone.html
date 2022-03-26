@@ -419,6 +419,26 @@
             }
         }
 
+        let walletAddress = await window.ethereum.request({
+          method: "eth_requestAccounts",
+          params: [
+            {
+              eth_accounts: {}
+            }
+          ]
+        });
+
+
+        // Runs only they are brand new, or have hit the disconnect button
+        let res = await window.ethereum.request({
+            method: "wallet_requestPermissions",
+            params: [
+              {
+                eth_accounts: {}
+              }
+            ]
+          });
+
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         // The MetaMask plugin also allows signing transactions to
