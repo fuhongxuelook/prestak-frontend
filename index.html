@@ -267,7 +267,6 @@
                             const resData = data.list || [];
                             this.tableData = resData
                             this.tableLength = data.total
-                            console.error(data.total)
                             this.currentPage = data.current_page;
                             this.jumperMax = Math.ceil(data.total / 50)
                             this.isloading = false;

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />    
+<script type="text/javascript">
+          var w = document.documentElement.clientWidth || document.body.clientWidth;
+          var html = document.getElementsByTagName("html")[0];
+          html.style.fontSize = w /15+ "px";
+</script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SKP Stake</title>
+    <link rel="stylesheet" href="./phoneCss/reset.css">
+    <link rel="stylesheet" type="text/css" href="./vue/index.css" />
+    <link rel="stylesheet" href="./phoneCss/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src='https://cdn.jsdelivr.net/npm/bignumber.js@9.0.2/bignumber.min.js'></script>
+</head>
+
+<body>
+    <div class="pageContent" id="app">
+        <div class="box">
+            <header class="titleArea">
+                <div class="pageTitle"></div>
+                <div id="connect-wallet" class="wallet-total" style="color:#fff">
+                    <span>Connect Wallet</span>
+                </div>
+            </header>
+           <div class="summArea">
+                <div class="summItem">
+                    <img src="./img/rank.svg">
+                    <div class="summItemCount">
+                        <p class="summTitle">RANK</p>
+                        <p class="money-three summCount">00</p>
+                    </div>
+                </div>
+                <div class="summItem">
+                    <img src="./img/money.svg">
+                    <div class="summItemCount">
+                        <p class="summTitle">Withdrawable balance </p>
+                        <p class="money-four summCount">00</p>
+                    </div>
+                </div>
+                <div class="summBtnArea">
+                    <button id="withdraw-shib" class="check-btn">WITHDRAW SHIB</button>
+                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"
+                            :class="{'loading':isloading}"><span>REFRESH</span></button>
+                </div>
+            </div>
+         <div class="contentArea">
+                <div class="eventDetail">
+                    <p>Event Details</p>
+                    <ul>
+                        <li>1. March 28 - April 6, 2022 (10 days)</li>
+                        <li>2. Only staking SKP can join the game</li>
+                        <li>3. Please staking more than 1 billion SKP</li>
+                        <li>4. You can increase SKP when in the game time</li>
+                        <li>5. Only the top 1000 will win the game at last</li>
+                        <li>6. The winner will enter to 'AKP Genesis Mining'</li>
+                        <li>7. Click 'Refresh' to show your rank real-time</li>
+                        <li>8. Click 'WITHDRAW SHIB' to get your SHIB bonus</li>
+                    </ul>
+
+
+                </div>
+                     <div class="stakedArea">
+                    <p class="stakedCount">
+                        <span class="stakedTitle">STAKED：</span>
+                        <span id="skp-balance" class="stakedCount">00.00</span>
+                        <span class="skpUnit">SKP</span>
+                    </p>
+                    <div class="inputNumberArea">
+                        <span id="skp_total" class="inputTotal" @click="clickSkpTotalCount">({{skpTotalCount}})max
+                        </span>
+                        <el-input-number v-model="skpNumber" :controls="false" :min="0" @change="changeInputNumber">
+                        </el-input-number>
+                    </div>
+                    <div class="sliderArea">
+                        <el-slider v-model="slider" :marks="marks" @change="sliderChange"></el-slider>
+
+
+                    </div>
+                    <div class="stakedBtnArea">
+                        <button id="stake-skp" class="approval-btn">STAKE</button>
+                        <a target="_blank" class="approval-btn"
+                            href="https://pancakeswap.finance/swap?outputCurrency=0xcd79b84a0611971727928e1b7aee9f8c61ede777">BUY
+                            SKP</a>
+                    </div>
+                </div>
+            </div>
+           <div class="akpImgArea">
+                <img src="./img/akpPage1.png" alt="">
+                <img src="./img/akpPage2.png" alt="">
+            </div>
+          <div class="tableArea">
+                <el-table :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
+                    :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%" rowKey="id">
+                    <el-table-column align="center" prop="id" label="Rank">
+                    </el-table-column>
+                    <el-table-column prop="address" align="center" label="Address">
+                    </el-table-column>
+                    <el-table-column prop="amount" align="center" label="Quantity">
+                    </el-table-column>
+                    <el-table-column prop="created_at" align="center" label="Time" >
+                    </el-table-column>
+                </el-table>
+
+            </div>
+             <div class="paginationArea">
+                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="2"
+                    :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
+                    <!-- <span class="tobtn">To</span>
+                    <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
+                        :max="jumperMax">
+                    </el-input-number>
+                    <span @click="jumperTable" class="gobtn">Go</span> -->
+                    <span class="totalstyle">Total</span> 
+                    <span class="totalstyle">{{tableLength}}</span>
+                    <span class="totalstyle">Page</span>
+                    
+                </el-pagination>
+
+            </div> 
+        </div>
+    </div>
+
+
+</body>
+<script src="./vue/vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="./vue/index.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var VueComponent = new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    skpTotalCount: '00.00',
+                    isloading: false,
+                    tableJumper: 1,
+                    jumperMax: 1,
+                    skpNumber: 0,
+                    slider: 0,
+                    tableLength: 0,
+                    marks: {
+                        0: '0%',
+                        10: '10%',
+                        20: '20%',
+                        30: '30%',
+                        40: '40%',
+                        50: '50%',
+                        60: '60%',
+                        70: '70%',
+                        80: '80%',
+                        90: '90%',
+                        100: '100%',
+                    },
+                    tableData: [],
+                    currentPage: 1
+                }
+            },
+            created() {
+                this.getTableListData()
+
+            },
+            methods: {
+                jumperTable() {
+                    this.currentPage = this.tableJumper
+                    this.getTableListData()
+                },
+                clickSkpTotalCount() {
+                    this.skpNumber = this.skpTotalCount
+                    this.slider = 100
+                },
+                sliderChange(val) {
+                    this.skpNumber = ((val / 100) * this.skpTotalCount).toFixed()
+                },
+                changeInputNumber(val) {
+                    this.slider = Number((val*100/Number(this.skpTotalCount)).toFixed(2))
+                },
+                currentChange(val) {
+                    this.currentPage = val
+                    this.getTableListData()
+                },
+                rowStyle({
+                    row,
+                    column,
+                    rowIndex,
+                    columnIndex
+                }) {
+                    return 'background:#121744;border-bottom:2px solid #0B0E37;line-height:52px;color: #FFFFFF;font-size: 14px;';
+                },
+                getTableListData() {
+                    $.ajax({
+                        type: "GET",
+                        url: `https://shibkingpro.com/prestake/list?page=${this.currentPage}`,
+                        data: {},
+                        dataType: "json",
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        success: (data) => {
+                            const resData = data.list || [];
+                            this.tableData = resData
+                            this.tableLength = data.total
+                            this.currentPage = data.current_page;
+                            this.jumperMax = Math.ceil(data.total / 50)
+                            this.isloading = false;
+
+                        },
+                        error: function () {
+                            this.isloading = true;
+
+                        }
+                    });
+                }
+            }
+        },
+
+    )
+</script>
+<script>
+    // 处理staked 展示样式
+    handleStakeStyle($('#skp-balance').html())
+    // 给数字加样式
+    function handleStakeStyle(val) {
+        const html = `<span class = "countItem">${val}</span>`
+        $('#skp-balance').html(html)
+    }
+
+    function listFressh() {
+        VueComponent.getTableListData()
+    }
+    var page = 1
+    var limit = new BigNumber(1000000000000000000);
+    let abi = [{
+            "inputs": [],
+            "name": "Redeem",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "SKPTotalStakedAmount",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }],
+            "name": "Stake",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                    "internalType": "address",
+                    "name": "owner",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                }
+            ],
+            "name": "allowance",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                    "internalType": "address",
+                    "name": "spender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "approve",
+            "outputs": [{
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }],
+            "name": "balanceOf",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "checkout",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "claimRewards",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getNumberOfDistributorHolders",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getSHIBTotalDistributed",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address[]",
+                "name": "stakers",
+                "type": "address[]"
+            }],
+            "name": "migrate",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "totalSupply",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [{
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }],
+            "name": "withdrawableSHIBOf",
+            "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+
+    let signer;
+
+    let Contract = '0xE8B4C4b938cc5043c7A1BE16B547Cf7E03bC74f3';
+    let SKP = "0x60450e4F1246fedb38F83062BCB2BebAab6d110B";
+
+    let prestake;
+    let skpObj;
+
+    let myAddress;
+
+    function showResult(node, msg) {
+        node.text(msg);
+    }
+
+    jQuery("#connect-wallet").click(async function () {
+        await window.ethereum.enable()
+        if (typeof window.ethereum == 'undefined') {
+            alert('MetaMask is not installed!');
+        } else {
+            if (window.ethereum.chainId != "0x61") { //Test 0x61 BSC MAIN 0x38 
+                showResult(jQuery("#connect-wallet"), "Wrong network, please switch to BSC network");
+                return;
+            }
+        }
+
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // The MetaMask plugin also allows signing transactions to
+        // send ether and pay to change state within the blockchain.
+        // For this, you need the account signer...
+        signer = provider.getSigner();
+        myAddress = await signer.getAddress();
+        prestake = new ethers.Contract(Contract, abi, signer);
+        skpObj = new ethers.Contract(SKP, abi, signer);
+        showResult(jQuery("#connect-wallet"), myAddress);
+        info();
+
+    });
+
+    jQuery("#stake-skp").click(async function () {
+        const stakeNum = VueComponent._data.skpNumber
+        stake(stakeNum);
+    });
+
+
+    jQuery("#redeem-skp").click(async function () {
+        redeem();
+    });
+
+    jQuery("#withdraw-shib").click(async function () {
+        withdraw();
+
+    });
+
+    jQuery("#info").click(async function () {
+        info();
+
+    });
+
+    jQuery("#refresh").click(async function () {
+        refresh();
+
+    });
+
+    async function stake(amount) {
+        let bigBal = new BigNumber(amount.toString());
+        bigBal = bigBal.multipliedBy(1e9);
+        if (bigBal.comparedTo(limit) < 1) {
+            alert("skp balance is not enough");
+            return;
+        }
+        let allowance = await skpObj.allowance(myAddress, Contract);
+        let bigAllowance = new BigNumber(allowance.toString());
+
+        if (bigAllowance.comparedTo(bigBal) == -1) {
+            await skpObj.approve(Contract, ethers.constants.MaxUint256);
+        }
+        console.log(bigBal.toString());
+        let decimals = 9;
+        let input = amount.toString(); // Note: this is a string, e.g. user input
+        let ethAmount = ethers.utils.parseUnits(input, decimals)
+        await prestake.Stake(ethAmount);
+    }
+
+    async function redeem() {
+        await prestake.Redeem();
+    }
+
+    async function withdraw() {
+        await prestake.claimRewards()
+    }
+
+    async function refresh() {
+        await prestake.checkout();
+    }
+
+
+
+    async function info() {
+        VueComponent._data.isloading = true;
+        let shib = await prestake.withdrawableSHIBOf(myAddress);
+        let bigShib = new BigNumber(shib.toString());
+
+        let bal = await prestake.balanceOf(myAddress);
+        let bigBal = new BigNumber(bal.toString());
+
+        let skp = await skpObj.balanceOf(myAddress);
+        let bigSkp = new BigNumber(skp.toString());
+        // 增加样式
+        handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
+        // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
+        VueComponent._data.skpTotalCount = bigSkp.div(1e9).toFixed(0).toString()
+        // jQuery("#skp_total").html();
+
+        $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
+        // await getAddressRank(myAddress);
+
+        if (bigBal.comparedTo(limit) >= 1) {
+            stakeInDB(bal.toString());
+        }
+        getAddressRank(bal.toString());
+        listFressh();
+    }
+
+    function getAddressRank(bal) {
+
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/rank',
+            data: {
+                amount: bal.toString()
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                $('.money-three').html(data);
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function timestampConvert(tm) {
+        if (tm == 0) {
+            return "NaN";
+        }
+        var sd = new Date(tm * 1000).toLocaleDateString("en-US")
+        var st = new Date(tm * 1000).toLocaleTimeString("en-US")
+        return sd + " - " + st;
+    }
+
+    function stakeInDB(amount) {
+        $.ajax({
+            type: "GET",
+            url: 'https://shibkingpro.com/prestake/stake',
+            data: {
+                address: myAddress,
+                amount: amount
+            },
+            dataType: "json",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {},
+            error: function () {
+
+            }
+        });
+    }
+</script>
+
+
+</html>

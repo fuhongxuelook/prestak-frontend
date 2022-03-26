@@ -1,0 +1,433 @@
+.box {
+    background: #0B0E37;
+    padding: 0rem 0.5rem;
+    box-sizing: border-box;
+    padding-bottom: 15rem;
+}
+
+.titleArea {
+    /* height: 6rem; */
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #272F6E;
+}
+
+.pageTitle {
+    background:url(../img/BANNER.png) no-repeat center center;
+    background-size:14rem auto ;
+    width: 14rem;
+    height:2rem;
+}
+.wallet-total{
+    padding-top: 0.5rem;
+    padding-bottom:0.8rem;
+    align-self: flex-end;
+}
+.wallet-total span {
+    display: block;
+    text-align: center;
+    width: 5.36rem;
+    line-height: 1.28rem;
+    border-radius: 0.64rem;
+    border: 1px solid #345BCE;
+    cursor: pointer;
+    font-size: 0.56rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #345BCE;
+}
+.wallet-total span:hover{
+    border: 1px solid #345BCE;
+    box-shadow:0px 0px 2px 2px #345BCE
+}
+
+.summArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.8rem;
+    width: 100%;
+    background: rgba(91, 113, 188, 0.1);
+    border-radius: 0.4rem;
+    box-sizing: border-box;
+    padding: 0.8rem;
+}
+
+.summItem {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.8rem;
+}
+.summItemCount {
+    display: flex;
+    flex-direction: column;
+    color: #FFFFFF;
+    padding-left: 0.8rem;
+    box-sizing: border-box;
+
+}
+
+.summTitle {
+    font-size: 0.56rem;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    /* line-height: 0.8rem; */
+}
+
+.summCount {
+    font-size: 1.12rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.6rem;
+}
+
+.summBtnArea {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+
+.refresh-btn {
+    cursor: pointer;
+    width: 4.56rem;
+    line-height: 1.84rem;
+    border-radius: 0.92rem;
+    border: 1px solid #345BCE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.56rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #345BCE;
+    background: transparent;
+}
+.refresh-btn:hover{
+    border: 1px solid #345BCE;
+    box-shadow:0px 0px 2px 2px #345BCE
+}
+
+.refresh-btn img {
+    margin-right: 0.2rem;
+}
+
+
+.contentArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0.8rem;
+    padding-bottom: 1.6rem;
+    box-sizing: border-box;
+}
+
+.eventDetail {
+    color: #fff;
+    background-color: #16183f;
+    border-radius: 0.64rem;
+    box-sizing: border-box;
+    padding: 0.8rem;
+}
+
+.eventDetail p {
+    text-align: left;
+    padding-bottom: 0.8rem;
+    font-size: 0.8rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #efcd39;
+    box-sizing: border-box;
+}
+
+.eventDetail ul li {
+    font-size: 0.56rem;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #D0D2EB;
+    line-height: 1.2rem;
+}
+.stakedArea {
+    box-sizing: border-box;
+    width: 100%;
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.stakedTitle {
+    font-size: 0.72rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    /* padding-right: 0.64rem; */
+    box-sizing: border-box;
+}
+.stakedCount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 4.8rem;
+}
+
+.skpUnit {
+    font-size: 0.72rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    padding-left: 0.4rem;
+    box-sizing: border-box;
+}
+
+
+.countItem {
+    padding:0rem 0.4rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1rem;
+    background: #1D2368;
+    border-radius: 0.4rem;
+
+}
+
+.splitItem {
+    padding-left: 0.48rem;
+    box-sizing: border-box;
+}
+.inputNumberArea{
+    position: relative;
+    width:100%;
+}
+
+
+.approval-btn {
+    text-decoration: none;
+    cursor: pointer;
+    width: 4.48rem;
+    height: 1.6rem;
+    background: #345BCE;
+    border-radius: 0.8rem;
+    font-size: 0.64rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 1.6rem;
+    text-align: center;
+    border: none;
+    margin-right: 0.96rem;
+}
+.stakedBtnArea {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.akpImgArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+.akpImgArea img {
+    width: 100%;
+    padding-bottom:0.8rem;
+}
+
+
+
+
+
+.inputTotal{
+    font-size:0.56rem;
+    cursor: pointer;
+    position: absolute;
+    right:0.8rem;
+    top:0.6rem;
+    z-index:9999;
+    color: #fff;
+}
+.sliderArea {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 1.6rem;
+}
+.paginationArea{
+    display: flex;
+    justify-content: center;
+    margin-top: 0.64rem;
+}
+
+
+
+
+
+
+
+
+
+
+.check-btn {
+    cursor: pointer;
+    width: 5.92rem;
+    line-height: 1.84rem;
+    background: #345BCE;
+    border-radius: 0.92rem;
+    font-size: 0.56rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    border: none;
+}
+.check-btn:hover{
+    background: #4d6ed1;
+}
+.el-table::before {
+    height: 0rem;
+}
+
+.customer-table .el-table__fixed-right::before,
+.el-table__fixed::before {
+    width: 0;
+}
+
+.el-slider__marks-text {
+    color: #fff;
+    font-size: 0.5rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+.el-slider__stop {
+    width: 0.4rem;
+    height: 0.4rem;
+    top: -0.08rem;
+    background: #1E2259;
+}
+
+.el-slider__runway {
+    width:13rem;
+    /* height: 0.16rem; */
+    background: #1E2259;
+    border-radius: 0.4rem;
+}
+
+.el-slider__bar {
+    background: linear-gradient(90deg, #15194A 0%, #3AC3FE 100%);
+}
+
+.el-slider__button {
+    width: 0.4rem;
+    height: 0.4rem;
+    background: #39BFFA;
+    border: 3px solid #39BFFA;
+}
+.el-slider__button-wrapper{
+    top:-0.64rem;
+}
+.el-table__empty-block {
+    background: #0B0E37;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+    background: #121744;
+    color: #FFFFFF;
+
+    border-radius: 0.16rem;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background: #121744;
+    color: #FFFFFF;
+    border: 1px solid #1B2B6C;
+}
+
+.el-pagination__editor.el-input .el-input__inner {
+    background: #121744;
+    color: #FFFFFF;
+    border: 1px solid #1B2B6C;
+}
+
+.el-pagination__jump {
+    color: #FFFFFF;
+}
+.el-pagination__total{
+    color: #FFFFFF;
+}
+.inputNumberArea .el-input-number.is-without-controls .el-input__inner{
+    border:1px solid #345BCE;
+    background:#15194A;
+    text-align:left;
+    width:14rem;
+    color: #FFFFFF;
+    height:1.92rem;
+    border-radius: 0.4rem
+
+}
+.paginationArea .el-input-number.is-without-controls .el-input__inner{
+    border:1px solid #345BCE;
+    background:#15194A;
+    width:2rem;
+    color: #FFFFFF;
+    height:1.28rem;
+    border-radius: 0.4rem
+
+}
+
+.paginationArea .el-pagination{
+    display: flex;
+    align-items: center;
+}
+.tobtn{
+    color:#fff;
+    padding-left:0.4rem;
+}
+.gobtn{
+    padding-left:0.4rem;
+    cursor:pointer;
+    color:#fff;
+}
+@keyframes move{
+    from{
+        transform:rotate(0deg)
+    }
+    to{
+        transform:rotate(360deg)
+    }
+}
+.loading{
+    animation:move 2s ease 0s 5  forwards;
+}
+.totalstyle{
+    display:flex;
+    align-items: center;
+    text-align: center;
+    color:#fff;
+    padding-left:0.4rem;
+}
