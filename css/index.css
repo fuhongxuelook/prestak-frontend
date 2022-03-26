@@ -697,3 +697,10 @@
 .loading{
     animation:move 2s ease 0s 5  forwards;
 }
+.totalstyle{
+    display:flex;
+    align-items: center;
+    text-align: center;
+    color:#fff;
+    padding-left:10px;
+}

@@ -132,13 +132,17 @@
 
             </div>
             <div class="paginationArea">
-                <el-pagination layout=" total,prev, pager, next,slot" background :total="tableLength" :page-size="2"
+                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="2"
                     :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
                     <span class="tobtn">To</span>
                     <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
                         :max="jumperMax">
                     </el-input-number>
                     <span @click="jumperTable" class="gobtn">Go</span>
+                    <span class="totalstyle">Total</span> 
+                    <span class="totalstyle">{{tableLength}}</span>
+                    <span class="totalstyle">Page</span>
+                    
                 </el-pagination>
 
             </div>
@@ -237,7 +241,7 @@
                     this.skpNumber = ((val / 100) * this.skpTotalCount).toFixed()
                 },
                 changeInputNumber(val) {
-                    this.slider = val/Number(this.skpTotalCount).toFixed(2)
+                    this.slider = Number((val*100/Number(this.skpTotalCount)).toFixed(2))
                 },
                 currentChange(val) {
                     this.currentPage = val
