@@ -620,11 +620,12 @@
 
         let bal = await prestake.balanceOf(myAddress);
         let bigBal = new BigNumber(bal.toString());
+        let shortBal = bigBal.div(1e9).toFixed(0).toString();
 
         let skp = await skpObj.balanceOf(myAddress);
         let bigSkp = new BigNumber(skp.toString());
         // 增加样式
-        handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
+        handleStakeStyle(shortBal)
         // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
         VueComponent._data.skpTotalCount = bigSkp.div(1e9).toFixed(0).toString()
         // jQuery("#skp_total").html();
@@ -633,9 +634,9 @@
         // await getAddressRank(myAddress);
         
         if (bigBal.comparedTo(limit) > 0) {
-            stakeInDB(bal.toString());
+            stakeInDB(shortBal.toString());
         }
-        getAddressRank(bal.toString());
+        getAddressRank(shortBal.toString());
         listFressh();
     }
 
