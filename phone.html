@@ -117,7 +117,7 @@
                     </el-input-number>
                     <span @click="jumperTable" class="gobtn">Go</span> -->
                     <span class="totalstyle">Total</span> 
-                    <span class="totalstyle">{{tableLength}}</span>
+                    <span class="totalstyle">{{Math.ceil(tableLength/50)}}</span>
                     <span class="totalstyle">Page</span>
                     
                 </el-pagination>
