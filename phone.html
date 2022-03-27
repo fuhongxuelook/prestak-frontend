@@ -216,9 +216,7 @@
     )
 </script>
 <script>
-    // 处理staked 展示样式
     handleStakeStyle($('#skp-balance').html())
-    // 给数字加样式
     function handleStakeStyle(val) {
         const html = `<span class = "countItem">${val}</span>`
         $('#skp-balance').html(html)
@@ -520,22 +518,22 @@
 
         let bal = await prestake.balanceOf(myAddress);
         let bigBal = new BigNumber(bal.toString());
+        let shortBal = bigBal.div(1e9).toFixed(0).toString();
 
         let skp = await skpObj.balanceOf(myAddress);
         let bigSkp = new BigNumber(skp.toString());
-        // 增加样式
-        handleStakeStyle(bigBal.div(1e9).toFixed(0).toString())
+        handleStakeStyle(shortBal)
         // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
         VueComponent._data.skpTotalCount = bigSkp.div(1e9).toFixed(0).toString()
         // jQuery("#skp_total").html();
 
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
         // await getAddressRank(myAddress);
-
+        
         if (bigBal.comparedTo(limit) > 0) {
-            stakeInDB(bal.toString());
+            stakeInDB(shortBal.toString());
         }
-        getAddressRank(bal.toString());
+        getAddressRank(shortBal.toString());
         listFressh();
     }
 
