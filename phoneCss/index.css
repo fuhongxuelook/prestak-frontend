@@ -235,6 +235,10 @@
     border: none;
     margin-right: 0.96rem;
 }
+.approval-btn:hover{
+    background: #4d6ed1;
+}
+
 .stakedBtnArea {
     margin-top: 1.6rem;
     display: flex;
@@ -277,6 +281,7 @@
     margin-top: 1.6rem;
 }
 .paginationArea{
+    align-items: center;
     display: flex;
     justify-content: center;
     margin-top: 0.64rem;
@@ -431,4 +436,15 @@
     text-align: center;
     color:#fff;
     padding-left:0.4rem;
+}
+.firstpage{
+    text-align: center;
+    font-size:0.56rem;
+    cursor: pointer;
+    background: #121744;
+    color: #FFFFFF;
+    border-radius: 0.16rem;
+    height: 1.12rem;
+    line-height: 1.12rem;
+    min-width: 1.42rem;
 }

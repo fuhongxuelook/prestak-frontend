@@ -39,7 +39,7 @@
                 <div class="summItem">
                     <img src="./img/money.svg">
                     <div class="summItemCount">
-                        <p class="summTitle">Withdrawable balance </p>
+                        <p class="summTitle">SHIB BALANCE</p>
                         <p class="money-four summCount">00</p>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <img src="./img/akpPage2.png" alt="">
             </div>
           <div class="tableArea">
-                <el-table :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
+                <el-table empty-text = "No Data":header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
                     :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%" rowKey="id">
                     <el-table-column align="center" prop="id" label="Rank">
                     </el-table-column>
@@ -109,16 +109,18 @@
 
             </div>
              <div class="paginationArea">
-                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="50"
+                <span class="firstpage" @click = "tofirst"><<</span>
+                <el-pagination  layout=" prev, pager, next,slot" background :total="tableLength" :page-size="50"
                     :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
+                    <span class="firstpage"  @click = "toend">>></span>
                     <!-- <span class="tobtn">To</span>
                     <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
                         :max="jumperMax">
                     </el-input-number>
                     <span @click="jumperTable" class="gobtn">Go</span> -->
-                    <span class="totalstyle">Total</span> 
+                    <!-- <span class="totalstyle">Total</span> 
                     <span class="totalstyle">{{Math.ceil(tableLength/50)}}</span>
-                    <span class="totalstyle">Page</span>
+                    <span class="totalstyle">Page</span> -->
                     
                 </el-pagination>
 
@@ -156,6 +158,14 @@
 
             },
             methods: {
+                tofirst(){
+                    this.currentPage = 1
+                    this.getTableListData()
+                },
+                toend(){
+                    this.currentPage = Math.ceil(this.tableLength/50)
+                    this.getTableListData()
+                },
                 jumperTable() {
                     this.currentPage = this.tableJumper
                     this.getTableListData()

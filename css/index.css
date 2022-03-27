@@ -319,6 +319,9 @@
     border: none;
     margin-right: 24px;
 }
+.approval-btn:hover{
+    background: #4d6ed1;
+}
 
 .radio {
     position: absolute;
@@ -577,6 +580,8 @@
     margin-top: 40px;
 }
 .paginationArea{
+    align-items: center;
+    text-align: center;
     display: flex;
     justify-content: center;
     margin-top: 16px;
@@ -676,6 +681,15 @@
 .paginationArea .el-pagination{
     display: flex;
     align-items: center;
+}
+.firstpage{
+    cursor: pointer;
+    background: #121744;
+    color: #FFFFFF;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+    min-width: 35.5px;
 }
 .tobtn{
     color:#fff;
