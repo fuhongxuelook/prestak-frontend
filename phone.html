@@ -482,7 +482,7 @@
     async function stake(amount) {
         let bigBal = new BigNumber(amount.toString());
         bigBal = bigBal.multipliedBy(1e9);
-        if (bigBal.comparedTo(limit) <= 1) {
+        if (bigBal.comparedTo(limit) >= 1) {
             alert("skp balance is not enough");
             return;
         }
