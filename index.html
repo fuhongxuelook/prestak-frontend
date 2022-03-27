@@ -134,7 +134,7 @@
 
             </div>
             <div class="paginationArea">
-                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="2"
+                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="50"
                     :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
                     <span class="tobtn">To</span>
                     <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
