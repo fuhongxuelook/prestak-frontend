@@ -25,9 +25,26 @@
     align-items: center;
     justify-content: center;
 }
-.checkoutBtn{
-    margin-left:10px;
+.myAddressStyle{
+    cursor: pointer;
+    color:#fff;
+    font-size:14px;
+}
+.myOmitAddress{
+    color:#fff;
+    font-size:14px;
     text-align: center;
+}
+.dialog-footer{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.checkoutBtn{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    margin-left:10px;
     cursor: pointer;
     width: 134px;
     line-height: 32px;
@@ -723,4 +740,16 @@
     text-align: center;
     color:#fff;
     padding-left:10px;
+}
+.el-dialog{
+    background-color:#131944;
+}
+.el-dialog__title{
+    font-size:16px;
+    color:#fff;
+
+}
+.el-icon-close:before{
+    content:'×';
+    color:#fff;
 }

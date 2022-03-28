@@ -23,11 +23,28 @@
     padding-bottom:0.8rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+}
+.myAddressStyle{
+    cursor: pointer;
+    color:#fff;
+    font-size:0.56rem;
+}
+.myOmitAddress{
+    color:#fff;
+    font-size:0.56rem;
+    text-align: center;
+}
+.dialog-footer{
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
 .checkoutBtn{
+    display: flex;
+    align-items: center;
+    justify-content:center;
     margin-left:0.4rem;
-    text-align: center;
     cursor: pointer;
     width: 5.36rem;
     line-height: 1.28rem;
@@ -467,4 +484,16 @@
     height: 1.12rem;
     line-height: 1.12rem;
     min-width: 1.42rem;
+}
+.el-dialog{
+    background-color:#131944;
+}
+.el-dialog__title{
+    font-size:0.64rem;
+    color:#fff;
+
+}
+.el-icon-close:before{
+    content:'×';
+    color:#fff;
 }

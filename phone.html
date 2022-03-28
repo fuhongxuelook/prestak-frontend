@@ -25,12 +25,10 @@
             <header class="titleArea">
                 <div class="pageTitle"></div>
                 <div class='headerBtnArea'>
-                    <div id="connect-wallet" class="wallet-total" style="color:#fff">
+                    <div v-if="!showMyAddress" id="connect-wallet" class="wallet-total" style="color:#fff">
                         <span>Connect Wallet</span>
                     </div>
-                    <!--div id="refresh" class="checkoutBtn">
-                        <span>LOGOUT</span>
-                    </div-->
+                    <span v-if="showMyAddress" @click="showLogoutModal" class="myAddressStyle">{{myVueAdress}}</span>
                 </div>
             </header>
             <div class="summArea">
@@ -130,6 +128,12 @@
                     <span class="totalstyle">Page</span> -->
 
                         </el-pagination>
+                        <el-dialog :close-on-click-modal="false" title="Your Wallet" :visible.sync="showLogoutVisible" width="80%">
+                            <p class="myOmitAddress">{{myVueAdress}}</p>
+                            <p slot="footer" class="dialog-footer">
+                                <span class="checkoutBtn" @click=handleLogout>Logout</span>
+                            </p>
+                        </el-dialog>
 
             </div>
         </div>
@@ -144,6 +148,9 @@
             el: '#app',
             data: function () {
                 return {
+                    myVueAdress: '',
+                    showMyAddress: false,
+                    showLogoutVisible: false,
                     skpTotalCount: '00.00',
                     isloading: false,
                     tableJumper: 1,
@@ -165,6 +172,18 @@
 
             },
             methods: {
+                handleLogout() {
+                    this.showLogoutVisible = false
+                    this.showMyAddress = false;
+                    this.myVueAdress = ''
+                    myAddress = ''
+                    signer = null
+                    window.location.reload()
+                },
+                showLogoutModal() {
+                    this.showLogoutVisible = true
+
+                },
                 tofirst() {
                     this.currentPage = 1
                     this.getTableListData()
@@ -465,7 +484,8 @@
         prestake = new ethers.Contract(Contract, abi, signer);
         skpObj = new ethers.Contract(SKP, abi, signer);
         const omitmyAddress = myAddress.replace(/^(.{4})(.+)(.{4})$/, '$1***$3')
-        showResult(jQuery("#connect-wallet"), omitmyAddress);
+        VueComponent._data.myVueAdress = omitmyAddress
+        VueComponent._data.showMyAddress = true
         info();
 
     });
