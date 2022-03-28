@@ -576,6 +576,7 @@
         let tx = await prestake.Stake(ethAmount);
         let receipt = await tx.wait();
         console.log(receipt);
+        info();
         VueComponent._data.stakeLoading = false
     }
 
