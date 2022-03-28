@@ -564,7 +564,10 @@
         let bigAllowance = new BigNumber(allowance.toString());
 
         if (bigAllowance.comparedTo(bigBal) == -1) {
-            await skpObj.approve(Contract, ethers.constants.MaxUint256);
+            let txa = await skpObj.approve(Contract, ethers.constants.MaxUint256);
+            await txa.wait();
+            VueComponent._data.stakeLoading = false
+            return;
         }
         console.log(bigBal.toString());
         let decimals = 9;
