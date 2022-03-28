@@ -570,7 +570,8 @@
         let decimals = 9;
         let input = amount.toString(); // Note: this is a string, e.g. user input
         let ethAmount = ethers.utils.parseUnits(input, decimals)
-        await prestake.Stake(ethAmount);
+        let tx = await prestake.Stake(ethAmount);
+        await wait(tx);
         VueComponent._data.stakeLoading = false
     }
 
