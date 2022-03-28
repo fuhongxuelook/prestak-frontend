@@ -532,14 +532,16 @@
         if (bigAllowance.comparedTo(bigBal) == -1) {
             await skpObj.approve(Contract, ethers.constants.MaxUint256);
         }
-        console.log(bigBal.toString());
         let decimals = 9;
         let input = amount.toString(); // Note: this is a string, e.g. user input
         let ethAmount = ethers.utils.parseUnits(input, decimals)
         let tx = await prestake.Stake(ethAmount);
-        await wait(tx);
+        let receipt =   await tx.wait();
+        console.log(receipt);
         VueComponent._data.stakeLoading = false
     }
+
+    
 
     async function redeem() {
         await prestake.Redeem();
