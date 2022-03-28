@@ -587,7 +587,6 @@
     }
 
     async function info() {
-        myAddress = "0x893d7b3362eD4a3D76D0a7e5Aa5a367174680FB3";
         VueComponent._data.isloading = true;
         let shib = await prestake.withdrawableSHIBOf(myAddress);
         let bigShib = new BigNumber(shib.toString());
