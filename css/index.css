@@ -223,7 +223,9 @@
     box-shadow:0px 0px 2px 2px #345BCE
 }
 
-
+.refresh-btn:disabled{
+    cursor: no-drop;
+}
 .refresh-btn img {
     margin-right: 5px;
 }
@@ -327,6 +329,9 @@
 }
 
 .approval-btn {
+    display:flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     cursor: pointer;
     width: 112px;
@@ -343,7 +348,12 @@
     margin-right: 24px;
 }
 .approval-btn:hover{
+    color: #FFFFFF;
     background: #4d6ed1;
+}
+.el-button:focus{
+    color: #FFFFFF;
+    background: #345BCE;
 }
 
 .radio {
@@ -752,4 +762,7 @@
 .el-icon-close:before{
     content:'×';
     color:#fff;
+}
+.el-icon-more:before{
+    content:'...'
 }

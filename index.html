@@ -63,7 +63,7 @@
                 <div class="divide"></div>
                 <div class="summBtnArea">
                     <button id="withdraw-shib" class="check-btn">WITHDRAW SHIB</button>
-                    <button id="info" class="refresh-btn"><img src="./img/refresh.svg"
+                    <button id="info" class="refresh-btn" :disabled="isloading"><img src="./img/refresh.svg"
                             :class="{'loading':isloading}"><span>REFRESH</span></button>
                 </div>
             </div>
@@ -99,7 +99,7 @@
 
                     </div>
                     <div class="stakedBtnArea">
-                        <button id="stake-skp" class="approval-btn">STAKE</button>
+                        <el-button id="stake-skp" class="approval-btn" :loading="stakeLoading">STAKE</el-button>
                         <a target="_blank" class="approval-btn"
                             href="https://pancakeswap.finance/swap?outputCurrency=0xcd79b84a0611971727928e1b7aee9f8c61ede777">BUY
                             SKP</a>
@@ -158,6 +158,7 @@
             el: '#app',
             data: function () {
                 return {
+                    stakeLoading: false,
                     myVueAdress: '',
                     showMyAddress: false,
                     showLogoutVisible: false,
@@ -526,6 +527,7 @@
     });
 
     jQuery("#stake-skp").click(async function () {
+        VueComponent._data.stakeLoading = true
         const stakeNum = VueComponent._data.skpNumber
         stake(stakeNum);
     });
@@ -555,6 +557,7 @@
         bigBal = bigBal.multipliedBy(1e9);
         if (bigBal.comparedTo(limit) < 0) {
             alert("skp balance is not enough");
+            VueComponent._data.stakeLoading = false
             return;
         }
         let allowance = await skpObj.allowance(myAddress, Contract);
@@ -568,6 +571,7 @@
         let input = amount.toString(); // Note: this is a string, e.g. user input
         let ethAmount = ethers.utils.parseUnits(input, decimals)
         await prestake.Stake(ethAmount);
+        VueComponent._data.stakeLoading = false
     }
 
     async function redeem() {
@@ -597,9 +601,11 @@
         handleStakeStyle(shortBal)
         // jQuery("#skp-balance").html(bigBal.div(1e9).toFixed(0).toString());
         VueComponent._data.skpTotalCount = bigSkp.div(1e9).toFixed(0).toString()
-        // jQuery("#skp_total").html();
+        VueComponent._data.skpNumber = 0
+        VueComponent._data.slider = 0,
+            // jQuery("#skp_total").html();
 
-        $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
+            $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
         // await getAddressRank(myAddress);
         if (bigBal.comparedTo(limit) >= 0) {
             stakeInDB(shortBal.toString());
