@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />    
-<script type="text/javascript">
-          var w = document.documentElement.clientWidth || document.body.clientWidth;
-          var html = document.getElementsByTagName("html")[0];
-          html.style.fontSize = w /15+ "px";
-</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript">
+        var w = document.documentElement.clientWidth || document.body.clientWidth;
+        var html = document.getElementsByTagName("html")[0];
+        html.style.fontSize = w / 15 + "px";
+    </script>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SKP Stake</title>
     <link rel="stylesheet" href="./phoneCss/reset.css">
@@ -24,11 +24,16 @@
         <div class="box">
             <header class="titleArea">
                 <div class="pageTitle"></div>
-                <div id="connect-wallet" class="wallet-total" style="color:#fff">
-                    <span>Connect Wallet</span>
+                <div class='headerBtnArea'>
+                    <div id="connect-wallet" class="wallet-total" style="color:#fff">
+                        <span>Connect Wallet</span>
+                    </div>
+                    <div id="refresh" class="checkoutBtn">
+                        <span>LOGOUT</span>
+                    </div>
                 </div>
             </header>
-           <div class="summArea">
+            <div class="summArea">
                 <div class="summItem">
                     <img src="./img/rank.svg">
                     <div class="summItemCount">
@@ -49,7 +54,7 @@
                             :class="{'loading':isloading}"><span>REFRESH</span></button>
                 </div>
             </div>
-         <div class="contentArea">
+            <div class="contentArea">
                 <div class="eventDetail">
                     <p>Event Details</p>
                     <ul>
@@ -65,7 +70,7 @@
 
 
                 </div>
-                     <div class="stakedArea">
+                <div class="stakedArea">
                     <p class="stakedCount">
                         <span class="stakedTitle">STAKED：</span>
                         <span id="skp-balance" class="stakedCount">00.00</span>
@@ -90,12 +95,13 @@
                     </div>
                 </div>
             </div>
-           <div class="akpImgArea">
+            <div class="akpImgArea">
                 <img src="./img/akpPage1.png" alt="">
                 <img src="./img/akpPage2.png" alt="">
             </div>
-          <div class="tableArea">
-                <el-table empty-text = "No Data":header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
+            <div class="tableArea">
+                <el-table empty-text="No Data"
+                    :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
                     :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%" rowKey="id">
                     <el-table-column align="center" prop="id" label="Rank">
                     </el-table-column>
@@ -103,28 +109,29 @@
                     </el-table-column>
                     <el-table-column prop="amount" align="center" label="Quantity">
                     </el-table-column>
-                    <el-table-column prop="created_at" align="center" label="Time" >
+                    <el-table-column prop="created_at" align="center" label="Time">
                     </el-table-column>
                 </el-table>
 
             </div>
-             <div class="paginationArea">
-                <span class="firstpage" @click = "tofirst"><<</span>
-                <el-pagination  layout=" prev, pager, next,slot" background :total="tableLength" :page-size="50"
-                    :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
-                    <span class="firstpage"  @click = "toend">>></span>
-                    <!-- <span class="tobtn">To</span>
+            <div class="paginationArea">
+                <span class="firstpage" @click="tofirst">
+                    <<</span> <el-pagination layout=" prev, pager, next,slot" background :total="tableLength"
+                        :page-size="50" :current-page.sync="currentPage" @current-change="currentChange" prev-text="<"
+                        next-text=">">
+                        <span class="firstpage" @click="toend">>></span>
+                        <!-- <span class="tobtn">To</span>
                     <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
                         :max="jumperMax">
                     </el-input-number>
                     <span @click="jumperTable" class="gobtn">Go</span> -->
-                    <!-- <span class="totalstyle">Total</span> 
+                        <!-- <span class="totalstyle">Total</span> 
                     <span class="totalstyle">{{Math.ceil(tableLength/50)}}</span>
                     <span class="totalstyle">Page</span> -->
-                    
-                </el-pagination>
 
-            </div> 
+                        </el-pagination>
+
+            </div>
         </div>
     </div>
 
@@ -158,12 +165,12 @@
 
             },
             methods: {
-                tofirst(){
+                tofirst() {
                     this.currentPage = 1
                     this.getTableListData()
                 },
-                toend(){
-                    this.currentPage = Math.ceil(this.tableLength/50)
+                toend() {
+                    this.currentPage = Math.ceil(this.tableLength / 50)
                     this.getTableListData()
                 },
                 jumperTable() {
@@ -178,7 +185,7 @@
                     this.skpNumber = ((val / 100) * this.skpTotalCount).toFixed()
                 },
                 changeInputNumber(val) {
-                    this.slider = Number((val*100/Number(this.skpTotalCount)).toFixed(2))
+                    this.slider = Number((val * 100 / Number(this.skpTotalCount)).toFixed(2))
                 },
                 currentChange(val) {
                     this.currentPage = val
@@ -203,9 +210,13 @@
                         },
                         success: (data) => {
                             const resData = data.list || [];
-                            const omitAddressList = resData.map(item=>{
-                                const omit = item.address.replace(/^(.{4})(.+)(.{4})$/, '$1***$3')
-                                return {...item,address:omit}
+                            const omitAddressList = resData.map(item => {
+                                const omit = item.address.replace(/^(.{4})(.+)(.{4})$/,
+                                    '$1***$3')
+                                return {
+                                    ...item,
+                                    address: omit
+                                }
                             })
                             this.tableData = omitAddressList
                             this.tableLength = data.total
@@ -227,6 +238,7 @@
 </script>
 <script>
     handleStakeStyle($('#skp-balance').html())
+
     function handleStakeStyle(val) {
         const html = `<span class = "countItem">${val}</span>`
         $('#skp-balance').html(html)
@@ -428,24 +440,20 @@
         }
 
         let walletAddress = await window.ethereum.request({
-          method: "eth_requestAccounts",
-          params: [
-            {
-              eth_accounts: {}
-            }
-          ]
+            method: "eth_requestAccounts",
+            params: [{
+                eth_accounts: {}
+            }]
         });
 
 
         // Runs only they are brand new, or have hit the disconnect button
         let res = await window.ethereum.request({
             method: "wallet_requestPermissions",
-            params: [
-              {
+            params: [{
                 eth_accounts: {}
-              }
-            ]
-          });
+            }]
+        });
 
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -539,7 +547,7 @@
 
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
         // await getAddressRank(myAddress);
-        
+
         if (bigBal.comparedTo(limit) > 0) {
             stakeInDB(shortBal.toString());
         }

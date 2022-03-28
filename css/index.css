@@ -20,6 +20,27 @@
 
     background: #757CB3;
 }
+.headerBtnArea{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkoutBtn{
+    margin-left:10px;
+    text-align: center;
+    cursor: pointer;
+    width: 134px;
+    line-height: 32px;
+    background: #345BCE;
+    border-radius: 23px;
+    font-size: 14px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.checkoutBtn:hover{
+    background: #4d6ed1;
+}
 
 .herder-log {
     width: 220px;
@@ -191,16 +212,7 @@
 }
 
 
-.wallet-type-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    float: left;
-    width: 180px;
-    text-align: center;
-    margin-top: 45px;
-}
+
 
 .iconbox {
     display: flex;
@@ -212,13 +224,7 @@
     background: #fff;
 }
 
-.wallet-type-right P {
-    font-size: 14px;
-    color: #FFFFFF;
-    text-align: center;
-    line-height: 24px;
-    font-weight: 500;
-}
+
 
 .progress-p {
     font-size: 18px;

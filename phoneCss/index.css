@@ -18,11 +18,31 @@
     width: 14rem;
     height:2rem;
 }
-.wallet-total{
-    font-size:0.56rem;
+.headerBtnArea{
     padding-top: 0.5rem;
     padding-bottom:0.8rem;
-    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkoutBtn{
+    margin-left:0.4rem;
+    text-align: center;
+    cursor: pointer;
+    width: 5.36rem;
+    line-height: 1.28rem;
+    background: #345BCE;
+    border-radius: 0.92rem;
+    font-size: 0.56rem;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.checkoutBtn:hover{
+    background: #4d6ed1;
+}
+.wallet-total{
+    font-size:0.56rem;
 }
 .wallet-total span {
     display: block;

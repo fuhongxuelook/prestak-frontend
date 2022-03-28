@@ -36,9 +36,15 @@
         <div class="box">
             <header class="titleArea">
                 <img src="./img/BANNER.png" alt="" class="pageTitle">
-                <div id="connect-wallet" class="wallet-total" style="color:#fff">
-                    <span>Connect Wallet</span>
+                <div class='headerBtnArea'>
+                    <div id="connect-wallet" class="wallet-total" style="color:#fff">
+                        <span>Connect Wallet</span>
+                    </div>
+                    <div id="refresh" class="checkoutBtn" >
+                        <span>LOGOUT</span>
+                    </div>
                 </div>
+
             </header>
             <div class="summArea">
                 <div class="summItem">
@@ -120,7 +126,8 @@
 
             </div>
             <div class="tableArea">
-                <el-table empty-text = "No Data" :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
+                <el-table empty-text="No Data"
+                    :header-cell-style="{background:'#121744',color:'#fff','border-bottom':'1px solid #1B2B6C'}"
                     :border="false" :data="tableData" :cell-style="rowStyle" style="width: 100%" rowKey="id">
                     <el-table-column align="center" prop="id" label="Rank" width="120">
                     </el-table-column>
@@ -134,22 +141,23 @@
 
             </div>
             <div class="paginationArea">
-                <span class="firstpage" @click = "tofirst"><<</span>
-                <el-pagination layout=" prev, pager, next,slot" background :total="tableLength" :page-size="50"
-                    :current-page.sync="currentPage" @current-change="currentChange" prev-text="<" next-text=">">
-                    <span class="firstpage"  @click = "toend">>></span>
-                   
-                    <span class="tobtn">To</span>
-                    <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
-                        :max="jumperMax">
-                    </el-input-number>
-                    <span @click="jumperTable" class="gobtn">Go</span>
-                    <span class="totalstyle">Total</span>
-                    <span class="totalstyle">{{Math.ceil(tableLength/50)}}</span>
-                    <span class="totalstyle">Page</span>
+                <span class="firstpage" @click="tofirst">
+                    <<</span> <el-pagination layout=" prev, pager, next,slot" background :total="tableLength"
+                        :page-size="50" :current-page.sync="currentPage" @current-change="currentChange" prev-text="<"
+                        next-text=">">
+                        <span class="firstpage" @click="toend">>></span>
 
-                </el-pagination>
-               
+                        <span class="tobtn">To</span>
+                        <el-input-number style="width:50px" v-model="tableJumper" :controls="false" :min="1"
+                            :max="jumperMax">
+                        </el-input-number>
+                        <span @click="jumperTable" class="gobtn">Go</span>
+                        <span class="totalstyle">Total</span>
+                        <span class="totalstyle">{{Math.ceil(tableLength/50)}}</span>
+                        <span class="totalstyle">Page</span>
+
+                        </el-pagination>
+
 
             </div>
 
@@ -234,12 +242,12 @@
 
             },
             methods: {
-                tofirst(){
+                tofirst() {
                     this.currentPage = 1
                     this.getTableListData()
                 },
-                toend(){
-                    this.currentPage = Math.ceil(this.tableLength/50)
+                toend() {
+                    this.currentPage = Math.ceil(this.tableLength / 50)
                     this.getTableListData()
                 },
                 jumperTable() {
@@ -279,9 +287,13 @@
                         },
                         success: (data) => {
                             const resData = data.list || [];
-                            const omitAddressList = resData.map(item=>{
-                                const omit = item.address.replace(/^(.{4})(.+)(.{4})$/, '$1***$3')
-                                return {...item,address:omit}
+                            const omitAddressList = resData.map(item => {
+                                const omit = item.address.replace(/^(.{4})(.+)(.{4})$/,
+                                    '$1***$3')
+                                return {
+                                    ...item,
+                                    address: omit
+                                }
                             })
                             this.tableData = omitAddressList
                             this.tableLength = data.total
@@ -322,6 +334,7 @@
 
     });
     handleStakeStyle($('#skp-balance').html())
+
     function handleStakeStyle(val) {
         const html = `<span class = "countItem">${val}</span>`
         $('#skp-balance').html(html)
@@ -582,7 +595,7 @@
     async function stake(amount) {
         let bigBal = new BigNumber(amount.toString());
         bigBal = bigBal.multipliedBy(1e9);
-        if (bigBal.comparedTo(limit)  < 0) {
+        if (bigBal.comparedTo(limit) < 0) {
             alert("skp balance is not enough");
             return;
         }
@@ -611,8 +624,6 @@
         await prestake.checkout();
     }
 
-
-
     async function info() {
         VueComponent._data.isloading = true;
         let shib = await prestake.withdrawableSHIBOf(myAddress);
@@ -631,7 +642,7 @@
 
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
         // await getAddressRank(myAddress);
-        
+
         if (bigBal.comparedTo(limit) > 0) {
             stakeInDB(shortBal.toString());
         }
