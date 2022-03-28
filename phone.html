@@ -568,7 +568,7 @@
         $('.money-four').html(bigShib.div(1e18).toFixed(0).toString());
         // await getAddressRank(myAddress);
 
-        if (bigBal.comparedTo(limit) > 0) {
+        if (bigBal.comparedTo(limit) >= 0) {
             stakeInDB(shortBal.toString());
         }
         getAddressRank(shortBal.toString());
