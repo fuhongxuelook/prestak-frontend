@@ -521,20 +521,25 @@
     async function stake(amount) {
         let bigBal = new BigNumber(amount.toString());
         bigBal = bigBal.multipliedBy(1e9);
+
+        let allowance = await skpObj.allowance(myAddress, Contract);
+        let bigAllowance = new BigNumber(allowance.toString());
+
+        if (allowance == 0 || bigAllowance.comparedTo(bigBal) == -1) {
+            let txa = await skpObj.approve(Contract, ethers.constants.MaxUint256);
+            await txa.wait();
+            $('#stake-skp').html("STAKE");
+            VueComponent._data.stakeLoading = false
+            return;
+        } 
+        
         if (bigBal.comparedTo(limit) < 0) {
             alert("skp balance is not enough");
             VueComponent._data.stakeLoading = false
             return;
         }
-        let allowance = await skpObj.allowance(myAddress, Contract);
-        let bigAllowance = new BigNumber(allowance.toString());
 
-        if (bigAllowance.comparedTo(bigBal) == -1) {
-            let txa = await skpObj.approve(Contract, ethers.constants.MaxUint256);
-            await txa.wait();
-            VueComponent._data.stakeLoading = false
-            return;
-        }
+
         let decimals = 9;
         let input = amount.toString(); // Note: this is a string, e.g. user input
         let ethAmount = ethers.utils.parseUnits(input, decimals)
@@ -563,6 +568,12 @@
 
     async function info() {
         VueComponent._data.isloading = true;
+
+        let allowance = await skpObj.allowance(myAddress, Contract);
+        if(allowance == 0) {
+            $('#stake-skp').html("APPROVE");
+        }
+        
         let shib = await prestake.withdrawableSHIBOf(myAddress);
         let bigShib = new BigNumber(shib.toString());
 
